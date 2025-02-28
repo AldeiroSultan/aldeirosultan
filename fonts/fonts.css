@@ -22,7 +22,7 @@
   h1, h2, h3, h4, h5, h6,
   strong, b, 
   .page-title, .title, .section-title {
-    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+    font-family: 'Migha-BoldExpandedCNTR', !important;
     font-weight: bold;
   }
   
@@ -57,7 +57,7 @@ html body h6,
 html body .nav-menu a,
 html body strong, 
 html body b {
-  font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+  font-family: 'Migha-BoldExpandedCNTR',  !important;
 }
 
 html body, 
