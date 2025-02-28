@@ -78,7 +78,7 @@
   
   .info {
     /* font-family: monospace; */
-    font-family: 'Azeret Mono', monospace;
+    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif;
     color: color-mix(in lch, canvasText, transparent 45%);
     font-weight: 300;
     display: grid;
