@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio Website</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="menu.css">
 </head>
 <body>
   <div class="page-container">
@@ -34,6 +35,29 @@
     </button>
   </div>
 
+  <!-- Hamburger Menu Structure - You can also let JavaScript create these elements -->
+  <div class="hamburger-menu">
+    <div class="hamburger-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  
+  <div class="nav-menu">
+    <ul>
+      <li><a href="#" data-page="cover" data-index="0">Cover</a></li>
+      <li><a href="#" data-page="about" data-index="1">About</a></li>
+      <li><a href="#" data-page="intro" data-index="2">Intro</a></li>
+      <li><a href="#" data-page="experience" data-index="3">Experience</a></li>
+      <li><a href="#" data-page="projects" data-index="4">Projects</a></li>
+      <li><a href="#" data-page="contact" data-index="5">Contact</a></li>
+    </ul>
+  </div>
+  
+  <div class="menu-overlay"></div>
+
   <script src="main.js"></script>
+  <script src="menu.js"></script>
 </body>
 </html>
