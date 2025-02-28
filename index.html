@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Pages will be loaded here -->
+    <div class="page" id="cover" data-page="cover"></div>
+    <div class="page" id="about" data-page="about"></div>
+    <div class="page" id="intro" data-page="intro"></div>
+    <div class="page" id="experience" data-page="experience"></div>
+    <div class="page" id="projects" data-page="projects"></div>
+    <div class="page" id="contact" data-page="contact"></div>
+  </div>
+  
+  <!-- Navigation controls -->
+  <div class="navigation">
+    <button class="nav-button prev" aria-label="Previous page">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    </button>
+    <div class="page-indicator">
+      <span class="current-page">1</span>/<span class="total-pages">6</span>
+    </div>
+    <button class="nav-button next" aria-label="Next page">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
