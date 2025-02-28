@@ -25,12 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Preload all pages in the background
     function preloadPages() {
       pages.forEach((page, index) => {
-        setTimeout(() => {
-          const pageElement = document.getElementById(page.id);
-          if (!pageElement.dataset.loaded) {
-            loadPageContent(index, false);
-          }
-        }, index * 300); // Stagger loading to not block the main thread
+        if (index !== currentPageIndex) { // Skip current page as it's already loaded
+          setTimeout(() => {
+            const pageElement = document.getElementById(page.id);
+            if (!pageElement.dataset.loaded) {
+              loadPageContent(index, false);
+            }
+          }, index * 300); // Stagger loading to not block the main thread
+        }
       });
     }
     
@@ -257,17 +259,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize
     function init() {
+      // First, make the cover page visible with "active" class before loading its content
+      // This ensures it's visible immediately
+      document.getElementById('cover').classList.add('active');
+      
       createPageDots();
       setupEventListeners();
       updatePageIndicator();
       updateNavigationButtons();
       updateActiveDot();
       
-      // Load and activate the first page
-      loadPage(currentPageIndex);
-      
-      // Preload other pages in the background
-      setTimeout(preloadPages, 1000);
+      // Load the first page immediately with a higher priority
+      const coverPage = document.getElementById('cover');
+      if (!coverPage.dataset.loaded) {
+        // If not loaded yet, load it with high priority
+        loadPageContent(0, false).then(() => {
+          // Make sure the first page stays active after loading
+          document.getElementById('cover').classList.add('active');
+          // Only after first page is loaded, preload the others
+          setTimeout(preloadPages, 500);
+        });
+      } else {
+        // If already loaded somehow, just ensure it's active
+        activatePage(0);
+        // Preload the other pages
+        setTimeout(preloadPages, 500);
+      }
     }
     
     // Start the app
