@@ -330,4 +330,39 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Start the app
   init();
+
+  // Force font application
+function applyFonts() {
+  // Create style element
+  const style = document.createElement('style');
+  style.textContent = `
+    @font-face {
+      font-family: 'Migha-BoldExpandedCNTR';
+      src: url('/fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
+    }
+    h1, h2, h3, h4, h5, h6, strong, b, .nav-menu a {
+      font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+    }
+    body, p, span, div {
+      font-family: 'Azeret Mono', monospace !important;
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Apply to iframes
+  document.querySelectorAll('iframe').forEach(iframe => {
+    iframe.onload = function() {
+      try {
+        const iframeStyle = document.createElement('style');
+        iframeStyle.textContent = style.textContent;
+        iframe.contentDocument.head.appendChild(iframeStyle);
+      } catch(e) {
+        console.error('Could not apply fonts to iframe:', e);
+      }
+    };
+  });
+}
+
+// Call the function after page load
+window.addEventListener('DOMContentLoaded', applyFonts);
 });

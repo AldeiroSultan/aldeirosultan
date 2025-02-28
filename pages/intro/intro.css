@@ -77,7 +77,8 @@
   }
   
   .info {
-    font-family: monospace;
+    /* font-family: monospace; */
+    font-family: 'Azeret Mono', monospace;
     color: color-mix(in lch, canvasText, transparent 45%);
     font-weight: 300;
     display: grid;
@@ -133,7 +134,8 @@
   
   /* Add title for the page */
   .page-title {
-    font-family: monospace;
+    /* font-family: monospace; */
+    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;

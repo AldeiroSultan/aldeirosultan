@@ -20,9 +20,10 @@ html:not(:focus-within) {
 
 body {
   min-height: 100vh;
-  font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
-    Helvetica, Arial, sans-serif, system-ui;
-  background: canvas;
+  /* font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+    Helvetica, Arial, sans-serif, system-ui; */
+    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif;
+    background: canvas;
   margin: 0;
 }
 
