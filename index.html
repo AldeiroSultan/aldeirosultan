@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="menu.css">
   <link rel="stylesheet" href="fonts.css">
+  <!-- Preload font -->
+  <link rel="preload" href="fonts/Migha-BoldExpandedCNTR.otf" as="font" type="font/otf" crossorigin="anonymous">
 </head>
 <body>
   <div class="page-container">
@@ -60,5 +62,122 @@
 
   <script src="main.js"></script>
   <script src="menu.js"></script>
+  <script>
+    // Inline font enforcer
+    (function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Preload font
+        const fontPreload = document.createElement('link');
+        fontPreload.rel = 'preload';
+        fontPreload.href = './fonts/Migha-BoldExpandedCNTR.otf';
+        fontPreload.as = 'font';
+        fontPreload.type = 'font/otf';
+        fontPreload.crossOrigin = 'anonymous';
+        document.head.appendChild(fontPreload);
+        
+        // Add font-face definition
+        const fontFaceStyle = document.createElement('style');
+        fontFaceStyle.textContent = `
+          @font-face {
+            font-family: 'Migha-BoldExpandedCNTR';
+            src: url('./fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+          }
+          
+          /* Universal selectors with maximum specificity */
+          html body h1, 
+          html body h2, 
+          html body h3, 
+          html body h4, 
+          html body h5, 
+          html body h6,
+          html body .title,
+          html body .page-title,
+          html body .section-title,
+          html body strong, 
+          html body b,
+          html body .nav-menu a,
+          html body .typewriter,
+          html body [data-split],
+          html body li::marker,
+          html body .fluid,
+          html body article h3 {
+            font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+          }
+          
+          html body, 
+          html body p, 
+          html body div:not(.nav-menu), 
+          html body span, 
+          html body li:not(.nav-menu li),
+          html body .subtitle, 
+          html body .caption, 
+          html body .info:not(.info h3), 
+          html body .subheading, 
+          html body .paragraph {
+            font-family: 'Azeret Mono', monospace !important;
+          }
+        `;
+        document.head.appendChild(fontFaceStyle);
+        
+        // Handle iframes
+        const handleIframe = (iframe) => {
+          if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+            injectFontIntoIframe(iframe);
+          } else {
+            iframe.onload = function() {
+              injectFontIntoIframe(iframe);
+            };
+          }
+        };
+        
+        const injectFontIntoIframe = (iframe) => {
+          try {
+            if (!iframe.contentDocument) return;
+            
+            const iframeFontStyle = document.createElement('style');
+            iframeFontStyle.textContent = fontFaceStyle.textContent;
+            iframe.contentDocument.head.appendChild(iframeFontStyle);
+            
+            // Apply direct style to specific elements
+            const headingElements = iframe.contentDocument.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headingElements.forEach(el => {
+              el.style.fontFamily = "'Migha-BoldExpandedCNTR', Arial, sans-serif";
+            });
+            
+            // Handle nested iframes
+            iframe.contentDocument.querySelectorAll('iframe').forEach(nestedIframe => {
+              handleIframe(nestedIframe);
+            });
+          } catch(e) {
+            console.error('Could not inject font into iframe:', e);
+          }
+        };
+        
+        // Process existing iframes
+        document.querySelectorAll('iframe').forEach(iframe => {
+          handleIframe(iframe);
+        });
+        
+        // Watch for dynamically added iframes
+        const observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+              if (node.tagName === 'IFRAME') {
+                handleIframe(node);
+              }
+            });
+          });
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

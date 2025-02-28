@@ -76,8 +76,16 @@ body {
   min-height: 100vh;
   /* font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
     Helvetica, Arial, sans-serif, system-ui; */
-    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif;
-}
+    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+  }
+  
+  @font-face {
+    font-family: 'Migha-BoldExpandedCNTR';
+    src: url('../../fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
 
 body::before {
   --size: 45px;

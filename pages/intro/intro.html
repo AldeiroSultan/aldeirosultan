@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="intro.css">
   <link rel="stylesheet" href="menu.css">
   <link rel="stylesheet" href="../../fonts.css">
+   <!-- Preload font -->
+   <link rel="preload" href="../../fonts/Migha-BoldExpandedCNTR.otf" as="font" type="font/otf" crossorigin="anonymous">
+   <style>
+     h1, h2, h3, h4, h5, h6, strong, b, .nav-menu a {
+       font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+     }
+     body, p, div, span, li:not(.nav-menu li) {
+       font-family: 'Azeret Mono', monospace !important;
+     }
+   </style>
 </head>
 <body>
   <div class="card-container">
@@ -29,5 +39,46 @@
   <script src="intro.js"></script>
   <script src="menu.js"></script>
   <script src="cursor.js"></script>
+  <script>
+    // Font enforcer for iframe pages
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set correct path based on page location
+      const fontPath = '../../fonts/Migha-BoldExpandedCNTR.otf';
+      
+      // Add font-face definition
+      const fontStyle = document.createElement('style');
+      fontStyle.textContent = `
+        @font-face {
+          font-family: 'Migha-BoldExpandedCNTR';
+          src: url('${fontPath}') format('opentype');
+          font-weight: bold;
+          font-style: normal;
+          font-display: swap;
+        }
+        
+        /* High-specificity selectors */
+        html body h1, 
+        html body h2, 
+        html body h3, 
+        html body h4, 
+        html body h5, 
+        html body h6,
+        html body strong, 
+        html body b,
+        html body .nav-menu a,
+        html body .typewriter,
+        html body [data-split],
+        html body .fluid {
+          font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+        }
+      `;
+      document.head.appendChild(fontStyle);
+      
+      // Force Migha on all headings via direct style
+      document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
+        el.style.fontFamily = "'Migha-BoldExpandedCNTR', Arial, sans-serif";
+      });
+    });
+  </script>
 </body>
 </html>
