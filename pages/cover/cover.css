@@ -10,7 +10,7 @@
   --base: 0.3;
   --accent: hsl(8 100% 55%);
   --header-height: 100vh;
-  --overlay: color-mix(in lch, canvas 70%, transparent);
+  --overlay: transparent;
   color-scheme: light only;
 }
 
@@ -50,7 +50,7 @@ body::before {
       50% 50% / var(--size) var(--size),
     linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
       var(--size) var(--size);
-  mask: linear-gradient(-15deg, transparent 40%, white);
+  mask: linear-gradient(-15deg, transparent 40%, blue);
   top: 0;
   transform-style: flat;
   pointer-events: none;
@@ -127,7 +127,7 @@ header > section {
 
 header > section::before {
   content: '';
-  background: var(--overlay);
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
   inset: 0;
   translate: 0 100%;
