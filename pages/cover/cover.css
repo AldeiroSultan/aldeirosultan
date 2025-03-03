@@ -20,12 +20,10 @@ html:not(:focus-within) {
 
 body {
   min-height: 100vh;
-  /* font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
-    Helvetica, Arial, sans-serif, system-ui; */
-    /* font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif; */
-    background: canvas;
+  background: canvas;
   margin: 0;
   font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+  padding-right: 50px; /* Add space for side navigation */
 }
 
 @font-face {
@@ -236,5 +234,60 @@ h2 span {
     to {
       scale: 0.8 0.8;
     }
+  }
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-right: 40px;
+  }
+  
+  .content {
+    max-width: calc(100% - 3rem);
+  }
+  
+  [data-split] {
+    font-size: clamp(1.5rem, 6vmin + 0.8rem, 3.5rem);
+  }
+  
+  h2 {
+    font-size: clamp(1.6rem, 2.5vw + 0.8rem, 5rem);
+    text-align: center;
+  }
+  
+  :is(h1, h2) {
+    font-size: clamp(1.8rem, 2.8vw + 0.9rem, 5.5rem);
+  }
+  
+  .reader {
+    height: auto;
+    min-height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-right: 35px;
+  }
+  
+  .content {
+    max-width: calc(100% - 2.5rem);
+  }
+  
+  [data-split] {
+    font-size: clamp(1.2rem, 5vmin + 0.6rem, 3rem);
+  }
+  
+  h2 {
+    font-size: clamp(1.4rem, 2vw + 0.7rem, 4rem);
+  }
+  
+  :is(h1, h2) {
+    font-size: clamp(1.5rem, 2.2vw + 0.8rem, 4.5rem);
+  }
+  
+  [href='#read'] {
+    width: 40px;
   }
 }

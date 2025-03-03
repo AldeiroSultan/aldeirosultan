@@ -10,10 +10,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui; */
-    /* font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif; */
     margin: 0;
     font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+    padding-right: 50px; /* Add space for side navigation */
 }
 
 @font-face {
@@ -51,7 +50,6 @@ li:not(:last-of-type) {
 
 li::marker {
     font-size: clamp(.875rem, 1vw + 1rem, 2rem);
-    /* font-family: monospace; */
     font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif;
     vertical-align: middle;
     font-weight: 100;
@@ -195,12 +193,21 @@ footer {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    body {
+        padding-right: 40px;
+    }
+    
     section {
-        max-width: calc(100% - 2rem);
+        max-width: calc(100% - 3rem);
     }
 
     h1 {
         text-align: center;
+        font-size: clamp(1.8rem, 6vw + 0.5rem, 8rem);
+    }
+    
+    h1 span:nth-of-type(1) {
+        font-size: 1.2rem;
     }
 
     a {
@@ -208,5 +215,44 @@ footer {
         align-items: flex-start;
         gap: 0.5rem;
         padding: 1.5rem 0;
+    }
+    
+    ol {
+        font-size: clamp(1rem, 1.5vw + 0.8rem, 1.8rem);
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-right: 35px;
+    }
+    
+    section {
+        max-width: calc(100% - 2rem);
+    }
+    
+    header {
+        padding-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    h1 {
+        font-size: clamp(1.5rem, 5vw + 0.5rem, 6rem);
+    }
+    
+    h1 span:nth-of-type(1) {
+        font-size: 1rem;
+    }
+    
+    ol {
+        font-size: clamp(0.9rem, 1.2vw + 0.7rem, 1.5rem);
+    }
+    
+    a {
+        padding: 1.2rem 0;
+    }
+    
+    a span {
+        font-size: 0.8rem;
     }
 }

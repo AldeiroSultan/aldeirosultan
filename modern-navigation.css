@@ -1,0 +1,104 @@
+/* Classic Arrow Navigation */
+.navigation {
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+  }
+  
+  /* Navigation buttons - clean, classic style */
+  .nav-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(240, 240, 240, 0.7);
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .nav-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Arrow styling - black arrows pointing up/down */
+  .nav-button svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+  }
+  
+  /* Set arrow directions explicitly */
+  .nav-button.prev svg {
+    transform: rotate(-90deg); /* Point up */
+  }
+  
+  .nav-button.next svg {
+    transform: rotate(90deg); /* Point down */
+  }
+  
+  /* Disabled state */
+  .nav-button.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  /* Hide page dots completely */
+  .page-dots {
+    display: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .navigation {
+      right: 16px;
+    }
+    
+    .nav-button {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .nav-button svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navigation {
+      right: 12px;
+    }
+    
+    .nav-button {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .nav-button svg {
+      width: 12px;
+      height: 12px;
+    }
+  }

@@ -6,14 +6,15 @@
   <title>Portfolio Website</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="menu.css">
+  <link rel="stylesheet" href="minimal-arrow-navigation.css">
   <link rel="stylesheet" href="fonts.css">
   <!-- Preload font -->
   <link rel="preload" href="fonts/Migha-BoldExpandedCNTR.otf" as="font" type="font/otf" crossorigin="anonymous">
 </head>
 <body>
   <div class="page-container">
-    <!-- Pages will be loaded here -->
-    <div class="page" id="cover" data-page="cover"></div>
+    <!-- Pages will be loaded here - Note: Cover page has active class -->
+    <div class="page active" id="cover" data-page="cover"></div>
     <div class="page" id="about" data-page="about"></div>
     <div class="page" id="intro" data-page="intro"></div>
     <div class="page" id="experience" data-page="experience"></div>
@@ -21,24 +22,21 @@
     <div class="page" id="contact" data-page="contact"></div>
   </div>
   
-  <!-- Navigation controls -->
+  <!-- Minimal Navigation - just arrows, no background, no dots -->
   <div class="navigation">
     <button class="nav-button prev" aria-label="Previous page">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 15l-6-6-6 6"/>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <div class="page-indicator">
-      <span class="current-page">1</span>/<span class="total-pages">6</span>
-    </div>
     <button class="nav-button next" aria-label="Next page">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 9l6 6 6-6"/>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </div>
 
-  <!-- Hamburger Menu Structure - You can also let JavaScript create these elements -->
+  <!-- Hamburger Menu Structure -->
   <div class="hamburger-menu">
     <div class="hamburger-icon">
       <span></span>
@@ -60,10 +58,69 @@
   
   <div class="menu-overlay"></div>
 
+  <!-- Original scripts plus minimal animation -->
   <script src="main.js"></script>
   <script src="menu.js"></script>
   <script>
-    // Inline font enforcer
+    // Remove any page dots that might be created by main.js
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to remove page dots
+      function removePageDots() {
+        const pageDots = document.querySelector('.page-dots');
+        if (pageDots) {
+          pageDots.remove();
+        }
+      }
+      
+      // Run immediately
+      removePageDots();
+      
+      // Also run after a short delay in case they're created later
+      setTimeout(removePageDots, 500);
+      setTimeout(removePageDots, 1000);
+      
+      // Observer to remove dots if they get added dynamically
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(node => {
+              if (node.classList && node.classList.contains('page-dots')) {
+                node.remove();
+              }
+            });
+          }
+        });
+      });
+      
+      // Start observing the navigation element
+      const navigation = document.querySelector('.navigation');
+      if (navigation) {
+        observer.observe(navigation, { childList: true, subtree: true });
+      }
+      
+      // Handle arrow animations
+      const arrows = document.querySelectorAll('.nav-button');
+      arrows.forEach(arrow => {
+        const tail = arrow.querySelector('.arrow-tail');
+        if (tail) {
+          arrow.addEventListener('mouseenter', function() {
+            tail.style.transition = 'all 0.3s ease';
+            tail.style.strokeDashoffset = '0';
+            tail.style.opacity = '1';
+          });
+          
+          arrow.addEventListener('mouseleave', function() {
+            tail.style.transition = 'all 0.3s ease';
+            tail.style.strokeDashoffset = '10';
+            tail.style.opacity = '0';
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- Inline font enforcer -->
+  <script>
     (function() {
       document.addEventListener('DOMContentLoaded', function() {
         // Preload font

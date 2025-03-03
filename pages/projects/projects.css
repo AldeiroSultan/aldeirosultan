@@ -74,18 +74,16 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
-  /* font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
-    Helvetica, Arial, sans-serif, system-ui; */
-    font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-  }
+  font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+}
   
-  @font-face {
-    font-family: 'Migha-BoldExpandedCNTR';
-    src: url('../../fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
+@font-face {
+  font-family: 'Migha-BoldExpandedCNTR';
+  src: url('../../fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
 
 body::before {
   --size: 45px;
@@ -118,6 +116,7 @@ body {
   flex-direction: column;
   gap: 1rem;
   padding-block: 2rem;
+  padding-right: 50px; /* Add space for side navigation */
 }
 
 h1,
@@ -144,12 +143,6 @@ body > p {
   line-height: 1.5;
   opacity: 0.8;
   font-weight: 400;
-}
-
-@media (max-width: 768px) {
-  body > p {
-    text-align: center;
-  }
 }
 
 li :is(svg, h3) {
@@ -293,8 +286,12 @@ li {
   border-width: 0;
 }
 
-/* Responsive adjustments */
+/* Improved Mobile Responsive Adjustments */
 @media (max-width: 768px) {
+  body {
+    padding-right: 40px;
+  }
+  
   ul {
     display: flex;
     flex-direction: column;
@@ -332,5 +329,29 @@ li {
   
   li img {
     mask: none;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-right: 35px;
+  }
+  
+  body > p {
+    max-width: calc(100% - 2rem);
+    font-size: 0.9rem;
+  }
+  
+  ul {
+    max-width: calc(100% - 1.5rem);
+  }
+  
+  article p {
+    font-size: 12px;
+    max-width: 85%;
+  }
+  
+  article h3 {
+    font-size: 0.9rem;
   }
 }

@@ -13,11 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const totalPages = pages.length;
   let isTransitioning = false; // Flag to prevent multiple transitions at once
   
+  // Make these values available to other scripts
+  window.currentPageIndex = currentPageIndex;
+  window.totalPages = totalPages;
+  
   // Page transition functions
   function updatePageIndicator() {
-    document.querySelector('.current-page').textContent = currentPageIndex + 1;
-    document.querySelector('.total-pages').textContent = totalPages;
-    
     // Update document title based on current page
     document.title = `${pages[currentPageIndex].title} | Portfolio`;
   }
@@ -99,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
         isTransitioning = false;
       }, 800); // Match this to your CSS transition time
     }
+    
+    // Update window property for other scripts
+    window.currentPageIndex = pageIndex;
   }
   
   // Store the original activatePage function to be able to override it
@@ -131,12 +135,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update current page index
     currentPageIndex = pageIndex;
+    window.currentPageIndex = pageIndex; // Update window property
     
     // Update navigation button states
     updateNavigationButtons();
-    
-    // Update active dot
-    updateActiveDot();
   }
   
   // Define activatePage and store the original function
@@ -157,60 +159,52 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateNavigationButtons() {
     // Disable prev button if on first page
     const prevButton = document.querySelector('.nav-button.prev');
-    prevButton.disabled = currentPageIndex === 0;
-    prevButton.classList.toggle('disabled', currentPageIndex === 0);
+    if (prevButton) {
+      prevButton.disabled = currentPageIndex === 0;
+      prevButton.classList.toggle('disabled', currentPageIndex === 0);
+    }
     
     // Disable next button if on last page
     const nextButton = document.querySelector('.nav-button.next');
-    nextButton.disabled = currentPageIndex === totalPages - 1;
-    nextButton.classList.toggle('disabled', currentPageIndex === totalPages - 1);
+    if (nextButton) {
+      nextButton.disabled = currentPageIndex === totalPages - 1;
+      nextButton.classList.toggle('disabled', currentPageIndex === totalPages - 1);
+    }
   }
   
-  // Create page dots for direct navigation
+  // Modified createPageDots to not create dots
   function createPageDots() {
-    const pageDotsContainer = document.createElement('div');
-    pageDotsContainer.className = 'page-dots';
+    // We're intentionally not creating dots
+    console.log('Page dots creation disabled');
     
-    pages.forEach((page, index) => {
-      const dot = document.createElement('button');
-      dot.className = 'page-dot';
-      dot.setAttribute('aria-label', `Go to ${page.title} page`);
-      dot.dataset.pageIndex = index;
-      
-      dot.addEventListener('click', () => {
-        if (!isTransitioning && currentPageIndex !== index) {
-          loadPage(index);
+    // Instead, make sure up/down arrows work properly
+    const prevButton = document.querySelector('.nav-button.prev');
+    const nextButton = document.querySelector('.nav-button.next');
+    
+    if (prevButton) {
+      prevButton.addEventListener('click', function() {
+        if (currentPageIndex > 0 && !isTransitioning) {
+          loadPage(currentPageIndex - 1);
         }
       });
-      
-      pageDotsContainer.appendChild(dot);
-    });
+    }
     
-    document.querySelector('.navigation').appendChild(pageDotsContainer);
+    if (nextButton) {
+      nextButton.addEventListener('click', function() {
+        if (currentPageIndex < totalPages - 1 && !isTransitioning) {
+          loadPage(currentPageIndex + 1);
+        }
+      });
+    }
   }
   
+  // Modified updateActiveDot to do nothing
   function updateActiveDot() {
-    const dots = document.querySelectorAll('.page-dot');
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentPageIndex);
-    });
+    // No dots to update
   }
   
   // Navigation event listeners
   function setupEventListeners() {
-    // Button navigation
-    document.querySelector('.nav-button.prev').addEventListener('click', function() {
-      if (currentPageIndex > 0 && !isTransitioning) {
-        loadPage(currentPageIndex - 1);
-      }
-    });
-    
-    document.querySelector('.nav-button.next').addEventListener('click', function() {
-      if (currentPageIndex < totalPages - 1 && !isTransitioning) {
-        loadPage(currentPageIndex + 1);
-      }
-    });
-    
     // Keyboard navigation
     document.addEventListener('keydown', function(event) {
       if (isTransitioning) return;
@@ -299,21 +293,21 @@ document.addEventListener('DOMContentLoaded', function() {
   function init() {
     // First, make the cover page visible with "active" class before loading its content
     // This ensures it's visible immediately
-    document.getElementById('cover').classList.add('active');
+    const coverPage = document.getElementById('cover');
+    coverPage.classList.add('active');
     
+    // Set up navigation
     createPageDots();
     setupEventListeners();
     updatePageIndicator();
     updateNavigationButtons();
-    updateActiveDot();
     
     // Load the first page immediately with a higher priority
-    const coverPage = document.getElementById('cover');
     if (!coverPage.dataset.loaded) {
       // If not loaded yet, load it with high priority
-      loadPageContent(0, false).then(() => {
+      loadPageContent(0, true).then(() => {
         // Make sure the first page stays active after loading
-        document.getElementById('cover').classList.add('active');
+        coverPage.classList.add('active');
         // Only after first page is loaded, preload the others
         setTimeout(preloadPages, 500);
       });
@@ -323,6 +317,21 @@ document.addEventListener('DOMContentLoaded', function() {
       // Preload the other pages
       setTimeout(preloadPages, 500);
     }
+    
+    // Double check cover page is visible after a short delay
+    setTimeout(function() {
+      if (!coverPage.classList.contains('active')) {
+        coverPage.classList.add('active');
+      }
+    }, 1000);
+    
+    // Remove any page dots that might have been created
+    setTimeout(function() {
+      const pageDots = document.querySelector('.page-dots');
+      if (pageDots) {
+        pageDots.remove();
+      }
+    }, 500);
   }
   
   // Make loadPage function globally accessible for menu and other components
@@ -331,38 +340,78 @@ document.addEventListener('DOMContentLoaded', function() {
   // Start the app
   init();
 
-  // Force font application
-function applyFonts() {
-  // Create style element
-  const style = document.createElement('style');
-  style.textContent = `
-    @font-face {
-      font-family: 'Migha-BoldExpandedCNTR';
-      src: url('/fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
-    }
-    h1, h2, h3, h4, h5, h6, strong, b, .nav-menu a {
-      font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-    }
-    body, p, span, div {
-      font-family: 'Azeret Mono', monospace !important;
-    }
-  `;
-  document.head.appendChild(style);
-  
-  // Apply to iframes
-  document.querySelectorAll('iframe').forEach(iframe => {
-    iframe.onload = function() {
-      try {
-        const iframeStyle = document.createElement('style');
-        iframeStyle.textContent = style.textContent;
-        iframe.contentDocument.head.appendChild(iframeStyle);
-      } catch(e) {
-        console.error('Could not apply fonts to iframe:', e);
+  // Apply arrow animations
+  function setupArrowAnimations() {
+    const arrows = document.querySelectorAll('.nav-button');
+    
+    arrows.forEach(arrow => {
+      const tail = arrow.querySelector('.arrow-tail');
+      if (tail) {
+        // Initial values for animation
+        tail.style.strokeDasharray = '10';
+        tail.style.strokeDashoffset = '10';
+        tail.style.opacity = '0';
+        
+        // Hover animations
+        arrow.addEventListener('mouseenter', function() {
+          tail.style.transition = 'all 0.3s ease';
+          tail.style.strokeDashoffset = '0';
+          tail.style.opacity = '1';
+        });
+        
+        arrow.addEventListener('mouseleave', function() {
+          tail.style.transition = 'all 0.3s ease';
+          tail.style.strokeDashoffset = '10';
+          tail.style.opacity = '0';
+        });
+        
+        // Click effect
+        arrow.addEventListener('mousedown', function() {
+          tail.style.strokeWidth = '2.5';
+          
+          setTimeout(() => {
+            tail.style.strokeWidth = '2';
+          }, 300);
+        });
       }
-    };
-  });
-}
+    });
+  }
+  
+  // Setup arrow animations after a small delay
+  setTimeout(setupArrowAnimations, 1000);
 
-// Call the function after page load
-window.addEventListener('DOMContentLoaded', applyFonts);
+  // Force font application
+  function applyFonts() {
+    // Create style element
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'Migha-BoldExpandedCNTR';
+        src: url('/fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
+      }
+      h1, h2, h3, h4, h5, h6, strong, b, .nav-menu a {
+        font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+      }
+      body, p, span, div {
+        font-family: 'Azeret Mono', monospace !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Apply to iframes
+    document.querySelectorAll('iframe').forEach(iframe => {
+      iframe.onload = function() {
+        try {
+          const iframeStyle = document.createElement('style');
+          iframeStyle.textContent = style.textContent;
+          iframe.contentDocument.head.appendChild(iframeStyle);
+        } catch(e) {
+          console.error('Could not apply fonts to iframe:', e);
+        }
+      };
+    });
+  }
+
+  // Call the function after page load
+  applyFonts();
 });

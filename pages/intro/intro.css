@@ -11,6 +11,7 @@ body {
   background: color-mix(in lch, canvas, canvasText 10%);
   margin: 0;
   font-family: 'Azeret Mono', monospace;
+  padding-right: 50px; /* Add space for side navigation */
 }
   
 body::before {
@@ -156,6 +157,10 @@ p {
   
 /* Media queries for responsive layout */
 @media (max-width: 768px) {
+  body {
+    padding-right: 40px; /* Reduced padding for mobile */
+  }
+  
   .card-container {
     gap: 1rem;
     padding: 1rem;
@@ -163,5 +168,31 @@ p {
   
   article {
     width: 280px;
+  }
+  
+  .page-title h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-right: 35px; /* Further reduced padding for small mobile */
+  }
+  
+  .card-container {
+    padding: 0.8rem;
+  }
+  
+  article {
+    width: 260px;
+  }
+  
+  .page-title h2 {
+    font-size: 1.6rem;
+  }
+  
+  .info h3 {
+    font-size: 1.1rem;
   }
 }

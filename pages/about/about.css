@@ -24,11 +24,9 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
-  /* font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui; */
-  /* font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif; */
-
   margin: 0;
   font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
+  padding-right: 50px; /* Add space for side navigation */
 }
 
 @font-face {
@@ -289,37 +287,90 @@ section:nth-of-type(4) .image-box {
   .progress div:last-of-type > div {
     animation-range: calc(75vh + (var(--col-two-height) * 0.25)) calc(100vh + (var(--col-two-height) * 0.25))
   }
-
-  @media(max-width: 768px) {
-    .controller {
-      height: calc(var(--col-two-height) * 1.5);
-    }
-    .swapper {
-      view-timeline-name: --swapper;
-      width: 65%;
-      min-width: 300px;
-      height: calc(var(--col-one-height) * 2);
-      animation: flip both steps(1, end);
-      animation-timeline: view();
-      animation-range: 50vh calc(75vh + (var(--col-two-height) * 0.25));
-    }
-    .swapper img {
-      mix-blend-mode: normal;
-      animation-timeline: view();
-    }
-    .progress div > div {
-      animation-timeline: --swapper;
-    }
-  }
 }
 
-@media(max-width: 768px) {
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-right: 40px;
+  }
+  
   main {
     gap: 6rem;
   }
+  
   section .image-box {
     display: flex;
     flex-direction: column;
-    gap: 8rem;
+    gap: 4rem;
+    padding: 1rem;
+  }
+  
+  .controller {
+    height: auto;
+    min-height: 50vh;
+  }
+  
+  .swapper {
+    height: auto;
+    min-height: 40vh;
+  }
+  
+  h1 {
+    font-size: clamp(1.8rem, 5vw + 0.8rem, 8rem);
+    text-align: center;
+  }
+  
+  h1 span {
+    font-size: clamp(0.8rem, 2vw + 0.4rem, 2rem);
+  }
+  
+  header h2 {
+    font-size: clamp(0.9rem, 2.5vw + 0.5rem, 2.2rem);
+  }
+  
+  .caption {
+    font-size: 10px;
+    width: 30ch;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-right: 35px;
+  }
+  
+  main {
+    gap: 4rem;
+  }
+  
+  section .image-box {
+    gap: 3rem;
+    padding: 0.8rem;
+  }
+  
+  .controller {
+    min-height: 40vh;
+  }
+  
+  .swapper {
+    min-height: 30vh;
+  }
+  
+  h1 {
+    font-size: clamp(1.5rem, 4vw + 0.5rem, 6rem);
+  }
+  
+  h1 span {
+    font-size: clamp(0.7rem, 1.5vw + 0.3rem, 1.5rem);
+  }
+  
+  header h2 {
+    font-size: clamp(0.8rem, 2vw + 0.4rem, 1.8rem);
+  }
+  
+  .caption {
+    font-size: 9px;
+    width: 25ch;
   }
 }
