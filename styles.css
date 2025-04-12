@@ -65,6 +65,10 @@
   --font-size-medium: 16px;
   --font-size-small: 14px;
   
+  /* For the image hover effect */
+  --x: 0;
+  --y: 0;
+  
   scroll-behavior: smooth;
 }
 
@@ -265,6 +269,12 @@ a {
   margin: 0 auto;
 }
 
+/* Ensure each section is shown properly when JavaScript initializes */
+#content .section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ===== Cover Section Styles ===== */
 #cover {
   color: var(--text);
@@ -297,6 +307,7 @@ a {
   place-items: center;
   overflow: hidden;
   margin-top: 0;
+  transform-origin: 50% 0%;
 }
 
 #cover video {
@@ -380,6 +391,11 @@ a {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: 1.4;
   opacity: 0.8;
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
 }
 
 .content span {
@@ -388,6 +404,7 @@ a {
   transition: opacity 0.5s, filter 0.7s;
   /* Initial state for all spans */
   --active: 0;
+  display: inline-block; /* Added for better animation control */
 }
 
 .cover-footer {

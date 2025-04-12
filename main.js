@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // ===== Original Portfolio Code =====
-  // Make all sections visible initially to ensure smooth animations
+  // ===== Make all sections visible initially to ensure smooth animations =====
   document.querySelectorAll('.section').forEach(section => {
     section.classList.add('section-visible');
   });
 
-  // ===== Cover Section Scripts =====
+  // ===== Cover Section Animation =====
   // Initialize text splitting for the cover animation
   const toSplit = document.querySelector('[data-split]');
   if (toSplit) {
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // ===== Experience Section Scripts =====
+  // ===== Experience Section Animations =====
   // Cursor effect for experience section's post list
   const update = ({ x, y }) => {
     document.documentElement.style.setProperty('--x', x);
@@ -66,51 +65,31 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // ===== Popup Menu Functionality =====
-  // Initialize GSAP explicitly
+  // Check if GSAP is loaded
   if (typeof gsap === 'undefined') {
     console.error('GSAP is not loaded. Please make sure to include the GSAP library.');
   } else {
-    console.log('GSAP is loaded successfully.');
-    
-    // Check if CustomEase is available and create custom easing functions
+    // Initialize CustomEase if available
     if (typeof CustomEase !== 'undefined') {
       CustomEase.create("easeOutFast", "M0,0 C0.25,0.1 0.25,1 1,1"); // Opening ease
       CustomEase.create("easeInFast", "M0,0 C0.5,0 0.75,0.2 1,1"); // Closing ease
-      console.log('CustomEase initialized successfully');
-    } else {
-      console.warn('CustomEase not available. Using standard easing functions instead.');
     }
     
-    // Use direct DOM element references to avoid potential issues with selectors
+    // Get elements
     const menuBtn = document.getElementById("menu-btn");
     const dropdown = document.getElementById("dropdown");
     const content = document.getElementById("content");
     const navigation = document.getElementById("navigation");
     
-    // Log DOM elements to verify they exist
-    console.log('Menu Button:', menuBtn);
-    console.log('Dropdown:', dropdown);
-    console.log('Content:', content);
-    console.log('Navigation:', navigation);
-    
     if (menuBtn && dropdown && content && navigation) {
-      console.log('All required elements for menu are found');
-      
       // Track menu state
       let isOpen = false;
       
       // Add click event listener to menu button
       menuBtn.addEventListener("click", function() {
-        console.log('Menu button clicked. Current state:', isOpen ? 'open' : 'closed');
-        
         // Toggle menu state
         if (!isOpen) {
           // Opening the menu
-          console.log('Opening menu...');
-          
-          // Create a timeline for synchronized animations
-          const openTimeline = gsap.timeline();
-          
           // Reset elements first
           gsap.set(".dropdown__section--one h1, .dropdown__section--one p, .dropdown__button", {
             opacity: 0,
@@ -118,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
           });
           
           // Animation sequence
+          const openTimeline = gsap.timeline();
           openTimeline
             .to([dropdown, navigation, content], {
               y: "50vh",
@@ -155,12 +135,8 @@ document.addEventListener("DOMContentLoaded", function() {
           
         } else {
           // Closing the menu
-          console.log('Closing menu...');
-          
-          // Create a timeline for synchronized animations
-          const closeTimeline = gsap.timeline();
-          
           // Animation sequence
+          const closeTimeline = gsap.timeline();
           closeTimeline
             .to(".dropdown__button", {
               opacity: 0,
@@ -206,37 +182,24 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll('.dropdown__button').forEach(button => {
         button.addEventListener('click', () => {
           if (isOpen) {
-            console.log('Menu link clicked, closing menu...');
             menuBtn.click();
           }
         });
       });
-      
-    } else {
-      console.error('One or more required elements for the menu are missing:',
-        menuBtn ? '' : 'Menu Button,',
-        dropdown ? '' : 'Dropdown,',
-        content ? '' : 'Content,',
-        navigation ? '' : 'Navigation'
-      );
     }
   }
 
-  // ===== Projects Section Scripts =====
+  // ===== Projects Section Animations =====
   // Check if scroll-driven animations are supported
   if (!CSS.supports('animation-timeline: scroll()')) {
-    if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function') {
+    if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
-      console.log('ScrollTrigger registered for project animations');
       
       // Projects section animations
       const swappers = document.querySelectorAll('#projects .swapper');
-      console.log('Found swappers:', swappers.length);
       
       // Handle swapper animations
-      swappers.forEach((swapper, index) => {
-        console.log(`Setting up animations for swapper ${index+1}`);
-        
+      swappers.forEach((swapper) => {
         const controller = swapper.closest('.image-box')?.querySelector('.controller');
         const images = swapper.querySelectorAll('img');
         const progressBars = swapper.querySelectorAll('.progress > div > div');
@@ -338,10 +301,69 @@ document.addEventListener("DOMContentLoaded", function() {
               }
             }
           });
-        } else {
-          console.warn(`Missing controller or images for swapper ${index+1}`);
         }
       });
     }
+  }
+
+  // ===== Cover Section Text Animation Fallback =====
+  // Fallback for browsers that don't support scroll-driven animations
+  if (!CSS.supports('animation-timeline: scroll()')) {
+    if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function' && typeof ScrollTrigger !== 'undefined') {
+      const contentSpans = document.querySelectorAll('[data-split] span');
+      if (contentSpans.length > 0) {
+        gsap.set(contentSpans, {
+          opacity: 0.3,
+          filter: "blur(5px)"
+        });
+        
+        ScrollTrigger.create({
+          trigger: ".reader",
+          start: "top 80%",
+          end: "center 30%",
+          scrub: true,
+          onUpdate: (self) => {
+            contentSpans.forEach((span, index) => {
+              const delay = index * 0.05;
+              const progress = Math.max(0, Math.min(1, (self.progress - delay) * 3));
+              if (progress > 0) {
+                gsap.to(span, {
+                  opacity: 0.3 + (progress * 0.7),
+                  filter: `blur(${5 * (1 - progress)}px)`,
+                  duration: 0.1,
+                  overwrite: true
+                });
+              }
+            });
+          }
+        });
+        
+        gsap.to("#cover header", {
+          scale: 0.8,
+          scrollTrigger: {
+            trigger: "#cover",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      }
+    }
+  }
+
+  // ===== Contact Section Animations =====
+  // Simple initialization for contact section if needed
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    // Add click handlers to social icons
+    const socialIcons = contactSection.querySelectorAll('.social-icon');
+    socialIcons.forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        // Placeholder for social icon click handler
+        if (!icon.href || icon.href === '#') {
+          e.preventDefault();
+        }
+      });
+    });
   }
 });
