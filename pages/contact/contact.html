@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Platform Demo - CSS Clip Path Demo</title>
-  <link rel="stylesheet" href="contact.css">
-  <link rel="stylesheet" href="../../fonts.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Explode control removed -->
   <div class="slides">
     <div class="container">
       <nav>
@@ -16,15 +16,15 @@
         </div>
       </nav>
       <header aria-hidden="true">
-        <h1>Contacts</h1>
+        <h1>Platform</h1>
       </header>
       <main>
         <div>
           <header>
-            <h1>Contacts</h1>
+            <h1>Platform</h1>
           </header>
           <section>
-            <img src="./contacts.jpg" alt="Jhey walks across a stage at All Day Hey! 2022" />
+            <img src="https://assets.codepen.io/605876/stage-fuel.jpeg" alt="Jhey walks across a stage at All Day Hey! 2022" />
           </section>
         </div>
         <section>
@@ -58,9 +58,9 @@
             </a>
           </div>
         </section>
-        <!-- <footer>
+        <footer>
           <div class="content">@jh3yy &copy; 2024 ┬┴┬┴┤•ᴥ•ʔ├┬┴┬┴</div>
-        </footer> -->
+        </footer>
       </main>
     </div>
     <div class="captioner">
@@ -75,47 +75,6 @@
     </div>
   </div>
 
-  <script src="contact.js"></script>
-  <script>
-    // Font enforcer for iframe pages
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set correct path based on page location
-      const fontPath = '../../fonts/Migha-BoldExpandedCNTR.otf';
-      
-      // Add font-face definition
-      const fontStyle = document.createElement('style');
-      fontStyle.textContent = `
-        @font-face {
-          font-family: 'Migha-BoldExpandedCNTR';
-          src: url('${fontPath}') format('opentype');
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-        }
-        
-        /* High-specificity selectors */
-        html body h1, 
-        html body h2, 
-        html body h3, 
-        html body h4, 
-        html body h5, 
-        html body h6,
-        html body strong, 
-        html body b,
-        html body .nav-menu a,
-        html body .typewriter,
-        html body [data-split],
-        html body .fluid {
-          font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-        }
-      `;
-      document.head.appendChild(fontStyle);
-      
-      // Force Migha on all headings via direct style
-      document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
-        el.style.fontFamily = "'Migha-BoldExpandedCNTR', Arial, sans-serif";
-      });
-    });
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>

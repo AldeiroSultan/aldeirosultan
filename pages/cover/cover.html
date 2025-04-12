@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sultan Aldeiro - Portfolio</title>
-  <link rel="stylesheet" href="cover.css">
-  <link rel="stylesheet" href="../../fonts.css">
+  <title>CSS Pro - Those Little Details</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -13,14 +12,14 @@
       autoplay
       muted
       loop
-      src="./cover.mp4"
+      src="https://assets.codepen.io/605876/turntable-opt.mp4"
     ></video>
     <section>
-      <!-- <h1>
-        <span>Sultan</span>
-        <span>Aldeiro</span>
-      </h1> -->
-      <!-- <a aria-hidden="true" href="#read">
+      <h1>
+        <span>CSS Pro</span>
+        <span>Those Little Details</span>
+      </h1>
+      <a aria-hidden="true" href="#read">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -35,67 +34,29 @@
             d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
           />
         </svg>
-      </a> -->
+      </a>
     </section>
   </header>
   <section class="reader" id="read">
     <div class="content">
       <div class="sr-only">
-        Hi, My name is Sultan Aldeiro and I am a Computer Science Student
-        in UBC Okanagan with interest in Cloud, Cybersecurity, and remote Sensing
+        With CSS, you can do way more than you think. One of the most fun CSS
+        animation APIs ever. A magical way to create scroll-driven animations
+        without the need to touch JavaScript. Animations run off the main
+        thread. And you can choose to use View Timelines or Scroll Timelines.
       </div>
       <div data-split aria-hidden="true">
-        I am driven by the rapidly evolving world requiring people to understand
-        the environment around them while actively living alongside AI.
+        The little details that make your sites feel great. Combine sticky
+        positioning with some scroll animation. With CSS, you can do way more
+        than you think.
       </div>
     </div>
   </section>
   <section>
-    <h2><span>The Future</span> Awaits</h2>
+    <h2><span>You</span> got this.</h2>
   </section>
-  <!-- <footer>Hi, My name is Sultan</footer> -->
+  <footer>jhey &copy; 2024 ʕ – ᴥ – ʔ</footer>
 
-  <script src="cover.js"></script>
-  <script>
-    // Font enforcer for iframe pages
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set correct path based on page location
-      const fontPath = '../../fonts/Migha-BoldExpandedCNTR.otf';
-      
-      // Add font-face definition
-      const fontStyle = document.createElement('style');
-      fontStyle.textContent = `
-        @font-face {
-          font-family: 'Migha-BoldExpandedCNTR';
-          src: url('${fontPath}') format('opentype');
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-        }
-        
-        /* High-specificity selectors */
-        html body h1, 
-        html body h2, 
-        html body h3, 
-        html body h4, 
-        html body h5, 
-        html body h6,
-        html body strong, 
-        html body b,
-        html body .nav-menu a,
-        html body .typewriter,
-        html body [data-split],
-        html body .fluid {
-          font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-        }
-      `;
-      document.head.appendChild(fontStyle);
-      
-      // Force Migha on all headings via direct style
-      document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
-        el.style.fontFamily = "'Migha-BoldExpandedCNTR', Arial, sans-serif";
-      });
-    });
-  </script>
+  <script src="script.js" type="module"></script>
 </body>
 </html>

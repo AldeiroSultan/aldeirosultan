@@ -1,357 +1,314 @@
-@import url('https://unpkg.com/normalize.css');
-
-/* ===== BASE STYLES ===== */
-:root {
-  --gap: 8px;
-  --base: clamp(2rem, 8cqi, 80px);
-  --easing: linear(
-    0 0%,
-    0.1538 4.09%,
-    0.2926 8.29%,
-    0.4173 12.63%,
-    0.5282 17.12%,
-    0.6255 21.77%,
-    0.7099 26.61%,
-    0.782 31.67%,
-    0.8425 37%,
-    0.8887 42.23%,
-    0.9257 47.79%,
-    0.9543 53.78%,
-    0.9752 60.32%,
-    0.9883 67.11%,
-    0.9961 75%,
-    1 100%
-  );
-  --speed: 0.6s;
-  --font-size-min: 16;
-  --font-size-max: 20;
-  --font-ratio-min: 1.2;
-  --font-ratio-max: 1.33;
-  --font-width-min: 375;
-  --font-width-max: 1500;
-}
-
-html {
-  color-scheme: light only;
-}
-
-[data-theme='light'] {
-  color-scheme: light only;
-}
-
-[data-theme='dark'] {
-  color-scheme: light only;
-}
-
-:where(.fluid) {
-  --fluid-min: calc(
-    var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
-  );
-  --fluid-max: calc(
-    var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
-  );
-  --fluid-preferred: calc(
-    (var(--fluid-max) - var(--fluid-min)) /
-      (var(--font-width-max) - var(--font-width-min))
-  );
-  --fluid-type: clamp(
-    (var(--fluid-min) / 16) * 1rem,
-    ((var(--fluid-min) / 16) * 1rem) -
-      (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
-      (var(--fluid-preferred) * var(--variable-unit, 100vi)),
-    (var(--fluid-max) / 16) * 1rem
-  );
-  font-size: var(--fluid-type);
-}
-
 *,
 *:after,
 *:before {
   box-sizing: border-box;
 }
 
+:root {
+  /* Math for layout and positioning */
+  --left-pad: calc(48px + 2rem);
+  --container-width: calc(100vw - 1rem - var(--left-pad));
+  --column-one: calc(var(--container-width) * (1.2 / 3.2));
+  --column-two: calc(var(--container-width) * (2 / 3.2));
+  --col-one-height: min(70vh, calc((380 / 272) * var(--column-one)));
+  --col-two-height: min(110vh, calc((1148 / 940) * var(--column-two)));
+  --catch-up: calc(var(--col-two-height) - var(--col-one-height));
+  --heading: clamp(2rem, 6vw + 1rem, 10rem);
+  
+  /* Typewriter animation variables */
+  --typewriter-speed: 2s;
+  --typewriter-characters: 100;
+}
+
 body {
   display: grid;
   place-items: center;
   min-height: 100vh;
-  font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-}
-  
-@font-face {
-  font-family: 'Migha-BoldExpandedCNTR';
-  src: url('../../fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
+  font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui;
+  margin: 0;
 }
 
-body::before {
-  --size: 45px;
-  --line: color-mix(in hsl, canvasText, transparent 70%);
-  content: '';
+:where(main, section) {
+  width: 100%;
+}
+
+header {
   height: 100vh;
-  width: 100vw;
-  position: fixed;
-  background: linear-gradient(
-        90deg,
-        var(--line) 1px,
-        transparent 1px var(--size)
-      )
-      50% 50% / var(--size) var(--size),
-    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
-      var(--size) var(--size);
-  mask: linear-gradient(-20deg, transparent 50%, white);
-  top: 0;
-  transform-style: flat;
-  pointer-events: none;
-  z-index: -1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  margin-bottom: 25vh;
 }
 
-/* ===== PROJECT SPECIFIC STYLES ===== */
-body {
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 1rem;
-  padding-block: 2rem;
-  padding-right: 50px; /* Add space for side navigation */
+section:last-of-type {
+  height: 50vh;
+  display: grid;
+  place-items: center;
+  align-content: center;
 }
 
-h1,
-p {
-  margin: 0;
-}
-
-h1.fluid {
-  --font-size-min: 22;
-  --font-level: 4.25;
-}
-
-h3 {
-  white-space: nowrap;
-  margin: 0;
-}
-
-body > p {
-  width: 74ch;
-  max-width: calc(100% - 4rem);
-  text-wrap: balance;
-  font-family: monospace;
-  margin-bottom: 4rem;
-  line-height: 1.5;
-  opacity: 0.8;
-  font-weight: 400;
-}
-
-li :is(svg, h3) {
-  opacity: 0.6;
-  transition: opacity calc(var(--speed) * 1.2) var(--easing);
-}
-
-li :is(a, p) {
-  opacity: 0;
-  transition: opacity calc(var(--speed) * 1.2) var(--easing);
-  width: fit-content;
-}
-
-li img {
-  filter: grayscale(1) brightness(1.5);
-  scale: 1.1;
-  transition-property: filter, scale;
-  transition-duration: calc(var(--speed) * 1.2);
-  transition-timing-function: var(--easing);
-}
-
-[data-active='true'] :is(a, p, h3, svg) {
-  opacity: var(--opacity, 1);
-}
-[data-active='true'] :is(a, p) {
-  transition-delay: calc(var(--speed) * 0.25);
-}
-
-[data-active='true'] img {
-  filter: grayscale(0) brightness(1);
-  scale: 1;
-  transition-delay: calc(var(--speed) * 0.25);
-}
-
-article {
-  outline: 2px dashed canvasText;
-  width: calc(var(--article-width) * 1px);
-  height: 100%;
-  position: absolute;
-  font-family: monospace;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding-inline: calc(var(--base) * 0.5 - 9px);
-  padding-bottom: 1rem;
-  overflow: hidden;
-}
-
-article h3 {
-  position: absolute;
-  top: 1rem;
-  left: calc(var(--base) * 0.5);
-  transform-origin: 0 50%;
-  rotate: 90deg;
-  font-size: 1rem;
-  font-weight: 300;
+section:last-of-type h2:last-of-type {
+  font-size: calc(var(--heading) * 0.15);
   text-transform: uppercase;
-  font-family: monospace;
 }
 
-article svg {
-  width: 18px;
-  fill: none;
-}
-
-article p {
-  font-size: 13px;
-  text-wrap: balance;
-  line-height: 1.25;
-  --opacity: 0.8;
-}
-
-article a {
-  position: absolute;
-  bottom: 1rem;
-  height: 18px;
-  line-height: 1;
-  color: inherit;
-  outline-color: currentColor;
-  outline-offset: 6px;
-}
-
-article a:is(:focus-visible, :hover) span {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-article a span {
-  display: inline-block;
-  line-height: 18px;
-  translate: calc(var(--base) * 0.5);
-  font-weight: 500;
-}
-
-article img {
-  position: absolute;
-  pointer-events: none;
-  inset: 0;
+img {
+  background: hsl(0 0% 90%);
   width: 100%;
   height: 100%;
+  border-radius: 6px;
   object-fit: cover;
-  mask: radial-gradient(100% 100% at 100% 0, #fff, #0000);
+  mix-blend-mode: plus-lighter;
 }
 
-ul {
-  display: grid;
-  container-type: inline-size;
-  grid-template-columns: 10fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: var(--gap);
-  list-style-type: none;
-  justify-content: center;
-  padding: 0;
-  height: clamp(300px, 40dvh, 474px);
+footer {
+  padding: 2rem;
+}
+
+h1 {
+  font-size: var(--heading);
   margin: 0;
-  width: 820px;
-  max-width: calc(100% - 4rem);
-  transition: grid-template-columns var(--speed) var(--easing);
+  position: relative;
 }
 
-li {
-  background: #fff;
+h1 span {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  display: inline-block;
+  translate: -50% 50%;
+  font-size: calc(var(--heading) * 0.2);
+  text-transform: uppercase;
+  color: hsl(6 100% 50%);
+}
+
+h2 {
+  font-size: calc(var(--heading) * 0.8);
+}
+
+section > h2 {
+  text-align: center;
+}
+
+header h2 {
+  text-transform: uppercase;
+  opacity: 0.8;
+  font-size: calc(var(--heading) * 0.25);
+}
+
+:where(h1, h2, p) {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 12rem;
+}
+
+/* The main container that splits the two columns */
+.image-box {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1rem 1rem var(--left-pad);
+  min-height: 100vh;
+  grid-template-columns: 1.2fr 2fr;
+}
+
+section:nth-of-type(3) .image-box,
+section:nth-of-type(4) .image-box {
+  grid-template-columns: 2fr 1.2fr;
+}
+
+/* Swapper container */
+.swapper {
+  height: var(--col-one-height);
+  width: 100%;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  border-radius: 6px;
+  isolation: isolate;
+}
+
+.swapper img:first-of-type {
+  opacity: 0;
+}
+
+.progress {
+  position: absolute;
+  height: min(100px, 15%);
+  width: 6px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  z-index: 10;
+}
+
+.progress > div {
+  border-radius: 100px;
+  background: hsl(0 0% 100% / 0.25);
+  transition: flex 0.25s ease-in-out;
+}
+
+.progress > div {
+  flex: 10;
+  position: relative;
+}
+
+.progress div > div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 100px;
+  height: 0%;
+  background: white;
+}
+
+.progress > div:last-of-type {
+  flex: calc(1 + (var(--flip, 0) * 99));
+}
+
+.swapper:first-of-type .progress {
+  right: 6px;
+}
+
+.swapper:last-of-type .progress {
+  left: 6px;
+}
+
+.caption {
+  position: absolute;
+  bottom: 100%;
+  padding: 1rem;
+  font-size: 12px;
+  width: 40ch;
+  max-width: 90%;
+  text-align: right;
+  right: 6px;
+  text-transform: uppercase;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.caption h2 {
+  font-size: 12px;
+}
+
+.swapper img {
+  position: absolute;
+}
+
+.controller {
+  height: var(--col-two-height);
+  width: 100%;
+  border-radius: 6px;
+}
+
+.swapper, .controller {
+  background: black;
+}
+
+/* Typewriter Animation */
+.typewriter {
+  width: fit-content;
   position: relative;
   overflow: hidden;
-  min-width: var(--base);
-  border-radius: 8px;
-  border: 1px solid color-mix(in hsl, canvas, canvasText 50%);
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  border-right: 2px solid;
   white-space: nowrap;
-  border-width: 0;
+  animation: typewriter var(--typewriter-speed) steps(var(--typewriter-characters)) 0.5s forwards,
+             blink 0.8s steps(var(--typewriter-characters)) infinite;
 }
 
-/* Improved Mobile Responsive Adjustments */
-@media (max-width: 768px) {
-  body {
-    padding-right: 40px;
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  from { border-color: transparent; }
+  to { border-color: hsl(0 0% 0%); }
+}
+
+/* Scroll-driven animations */
+@supports (animation-timeline: scroll()) {
+  @property --flip {
+    inherits: true;
+    initial-value: 0;
+    syntax: '<number>';
+  }
+  @keyframes fade { to { opacity: 0; }}
+  @keyframes fill-up { to { height: 100%; }}
+  @keyframes move { to { translate: 0 var(--catch-up); }}
+  @keyframes flip { to { --flip: 1; }}
+
+  .image-box {
+    /* The ViewTimeline for use by the children */
+    view-timeline: --container;
+  }
+
+  .swapper {
+    /* Translates from top to bottom of the container */
+    animation: move both linear, flip both steps(1);
+    animation-timeline: --container, view();
+    animation-range: 50vh calc(100vh + (var(--col-two-height) * 0.25)), cover 50% cover 50%;
+  }
+
+  .swapper img {
+    animation: fade both linear;
+    animation-timeline: view();
+    animation-range: cover 45% cover 55%;
+  }
+
+  .swapper img:first-of-type {
+    opacity: 1;
+    animation-direction: reverse;
+  }
+
+  .progress div > div {
+    animation: fill-up both linear;
+    animation-timeline: --container;
   }
   
-  ul {
+  .progress div:first-of-type > div {
+    animation-range: 50vh calc(50vh + (var(--col-two-height) * 0.125));
+  }
+  
+  .progress div:last-of-type > div {
+    animation-range: calc(75vh + (var(--col-two-height) * 0.25)) calc(100vh + (var(--col-two-height) * 0.25))
+  }
+
+  @media(max-width: 768px) {
+    .controller {
+      height: calc(var(--col-two-height) * 1.5);
+    }
+    .swapper {
+      view-timeline-name: --swapper;
+      width: 65%;
+      min-width: 300px;
+      height: calc(var(--col-one-height) * 2);
+      animation: flip both steps(1, end);
+      animation-timeline: view();
+      animation-range: 50vh calc(75vh + (var(--col-two-height) * 0.25));
+    }
+    .swapper img {
+      mix-blend-mode: normal;
+      animation-timeline: view();
+    }
+    .progress div > div {
+      animation-timeline: --swapper;
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  main {
+    gap: 6rem;
+  }
+  section .image-box {
     display: flex;
     flex-direction: column;
-    height: auto;
-    width: 100%;
-    max-width: calc(100% - 2rem);
-  }
-  
-  li {
-    min-height: 150px;
-  }
-  
-  article {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    padding: 1rem;
-  }
-  
-  article h3 {
-    position: relative;
-    top: 0;
-    left: 0;
-    rotate: 0deg;
-    margin-bottom: 0.5rem;
-  }
-  
-  article p {
-    max-width: 80%;
-  }
-  
-  [data-active='true'] :is(a, p, h3, svg) {
-    opacity: 1;
-  }
-  
-  li img {
-    mask: none;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding-right: 35px;
-  }
-  
-  body > p {
-    max-width: calc(100% - 2rem);
-    font-size: 0.9rem;
-  }
-  
-  ul {
-    max-width: calc(100% - 1.5rem);
-  }
-  
-  article p {
-    font-size: 12px;
-    max-width: 85%;
-  }
-  
-  article h3 {
-    font-size: 0.9rem;
+    gap: 8rem;
   }
 }

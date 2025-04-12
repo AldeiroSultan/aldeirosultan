@@ -1,417 +1,347 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Configuration
-  const pages = [
-    { id: 'cover', title: 'Cover' },
-    { id: 'about', title: 'About' },
-    { id: 'intro', title: 'Intro' },
-    { id: 'experience', title: 'Experience' },
-    { id: 'projects', title: 'Projects' },
-    { id: 'contact', title: 'Contact' }
-  ];
-  
-  let currentPageIndex = 0;
-  const totalPages = pages.length;
-  let isTransitioning = false; // Flag to prevent multiple transitions at once
-  
-  // Make these values available to other scripts
-  window.currentPageIndex = currentPageIndex;
-  window.totalPages = totalPages;
-  
-  // Page transition functions
-  function updatePageIndicator() {
-    // Update document title based on current page
-    document.title = `${pages[currentPageIndex].title} | Portfolio`;
-  }
-  
-  // Preload all pages in the background
-  function preloadPages() {
-    pages.forEach((page, index) => {
-      if (index !== currentPageIndex) { // Skip current page as it's already loaded
-        setTimeout(() => {
-          const pageElement = document.getElementById(page.id);
-          if (!pageElement.dataset.loaded) {
-            loadPageContent(index, false);
-          }
-        }, index * 300); // Stagger loading to not block the main thread
-      }
+document.addEventListener("DOMContentLoaded", function() {
+  // ===== Original Portfolio Code =====
+  // Make all sections visible initially to ensure smooth animations
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.add('section-visible');
+  });
+
+  // ===== Cover Section Scripts =====
+  // Initialize text splitting for the cover animation
+  const toSplit = document.querySelector('[data-split]');
+  if (toSplit) {
+    // Set CSS variables for sizing
+    const content = toSplit.innerText;
+    const contentLength = content.length;
+    const PPC = 10; // Pixels per character
+    const BUFFER = 40;
+
+    document.documentElement.style.setProperty('--buffer', BUFFER);
+    document.documentElement.style.setProperty('--ppc', PPC);
+    document.documentElement.style.setProperty('--pad', 8);
+    document.documentElement.style.setProperty('--content-length', contentLength + 2);
+    document.documentElement.style.setProperty('--base', '0.3');
+    
+    // Split the text into individual spans
+    const words = toSplit.innerText.split(' ');
+    toSplit.innerHTML = '';
+
+    let cumulation = 10;
+    words.forEach((word, index) => {
+      const text = document.createElement('span');
+      text.innerHTML = `<span>${word} </span>`;
+      text.style = `
+        --index: ${index};
+        --start: ${cumulation};
+        --end: ${cumulation + word.length};
+      `;
+      text.dataset.index = index;
+      text.dataset.start = cumulation;
+      text.dataset.end = cumulation + word.length;
+      cumulation += word.length + 1;
+      toSplit.appendChild(text);
     });
   }
-  
-  function loadPageContent(pageIndex, activate = true) {
-    const page = pages[pageIndex];
-    const pageElement = document.getElementById(page.id);
-    
-    return new Promise((resolve, reject) => {
-      // Create an iframe to isolate CSS and JS
-      const iframe = document.createElement('iframe');
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      iframe.style.border = 'none';
-      iframe.style.overflow = 'hidden'; // Hide scrollbars
-      
-      // Set iframe source to the HTML page
-      iframe.src = `pages/${page.id}/${page.id}.html`;
-      pageElement.appendChild(iframe);
-      
-      // Mark as loaded
-      pageElement.dataset.loaded = 'true';
-      
-      // Handle iframe load event
-      iframe.onload = () => {
-        if (activate) {
-          activatePage(pageIndex);
-        }
-        resolve();
-      };
-      
-      iframe.onerror = (error) => {
-        console.error(`Error loading page ${page.id}:`, error);
-        reject(error);
-      };
-    });
-  }
-  
-  function loadPage(pageIndex) {
-    // Don't do anything if we're already transitioning or trying to go to current page
-    if (isTransitioning || pageIndex === currentPageIndex) {
-      return;
-    }
-    
-    isTransitioning = true;
-    
-    const page = pages[pageIndex];
-    const pageElement = document.getElementById(page.id);
-    
-    // If page content hasn't been loaded yet
-    if (!pageElement.dataset.loaded) {
-      // Show loading indicator if needed
-      loadPageContent(pageIndex, true)
-        .then(() => {
-          isTransitioning = false;
-        })
-        .catch(() => {
-          isTransitioning = false;
-        });
-    } else {
-      // If already loaded, just activate it
-      activatePage(pageIndex);
-      // Wait for transition to complete before allowing another
-      setTimeout(() => {
-        isTransitioning = false;
-      }, 800); // Match this to your CSS transition time
-    }
-    
-    // Update window property for other scripts
-    window.currentPageIndex = pageIndex;
-  }
-  
-  // Store the original activatePage function to be able to override it
-  function originalActivatePageFn(pageIndex) {
-    // Get direction of transition (up or down)
-    const isMovingForward = pageIndex > currentPageIndex;
-    
-    // Get all page elements
-    const pageElements = document.querySelectorAll('.page');
-    
-    // Set up transition classes based on direction
-    pageElements.forEach(element => {
-      const elementIndex = Array.from(pageElements).indexOf(element);
-                          
-      // Clear all transition classes first
-      element.classList.remove('active', 'prev-active', 'next-waiting');
-      
-      if (elementIndex === pageIndex) {
-        // This is the target page we're moving to
-        element.classList.add('active');
-      } 
-      else if (elementIndex === currentPageIndex) {
-        // This is the page we're moving from
-        element.classList.add(isMovingForward ? 'prev-active' : 'next-waiting');
-      }
-    });
-    
-    // Update the page indicator
-    updatePageIndicator();
-    
-    // Update current page index
-    currentPageIndex = pageIndex;
-    window.currentPageIndex = pageIndex; // Update window property
-    
-    // Update navigation button states
-    updateNavigationButtons();
-  }
-  
-  // Define activatePage and store the original function
-  let activatePage = function(pageIndex) {
-    // Call the original function
-    originalActivatePageFn(pageIndex);
-    
-    // Dispatch event that page has changed
-    const event = new CustomEvent('pageChanged', { 
-      detail: { 
-        pageIndex: pageIndex,
-        pageId: pages[pageIndex].id 
-      } 
-    });
-    window.dispatchEvent(event);
+
+  // ===== Experience Section Scripts =====
+  // Cursor effect for experience section's post list
+  const update = ({ x, y }) => {
+    document.documentElement.style.setProperty('--x', x);
+    document.documentElement.style.setProperty('--y', y);
   };
-  
-  function updateNavigationButtons() {
-    // Disable prev button if on first page
-    const prevButton = document.querySelector('.nav-button.prev');
-    if (prevButton) {
-      prevButton.disabled = currentPageIndex === 0;
-      prevButton.classList.toggle('disabled', currentPageIndex === 0);
-    }
-    
-    // Disable next button if on last page
-    const nextButton = document.querySelector('.nav-button.next');
-    if (nextButton) {
-      nextButton.disabled = currentPageIndex === totalPages - 1;
-      nextButton.classList.toggle('disabled', currentPageIndex === totalPages - 1);
-    }
-  }
-  
-  // Modified createPageDots to not create dots
-  function createPageDots() {
-    // We're intentionally not creating dots
-    console.log('Page dots creation disabled');
-    
-    // Instead, make sure up/down arrows work properly
-    const prevButton = document.querySelector('.nav-button.prev');
-    const nextButton = document.querySelector('.nav-button.next');
-    
-    if (prevButton) {
-      prevButton.addEventListener('click', function() {
-        if (currentPageIndex > 0 && !isTransitioning) {
-          loadPage(currentPageIndex - 1);
-        }
+
+  const list = document.querySelector('.posts-list');
+  if (list) {
+    list.addEventListener('pointermove', update);
+
+    // Make the entire list area trigger the image display
+    const listItems = list.querySelectorAll('li');
+    listItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        item.style.setProperty('--active', '1');
       });
-    }
-    
-    if (nextButton) {
-      nextButton.addEventListener('click', function() {
-        if (currentPageIndex < totalPages - 1 && !isTransitioning) {
-          loadPage(currentPageIndex + 1);
-        }
+      item.addEventListener('mouseleave', () => {
+        item.style.setProperty('--active', '0');
       });
-    }
-  }
-  
-  // Modified updateActiveDot to do nothing
-  function updateActiveDot() {
-    // No dots to update
-  }
-  
-  // Navigation event listeners
-  function setupEventListeners() {
-    // Keyboard navigation
-    document.addEventListener('keydown', function(event) {
-      if (isTransitioning) return;
-      
-      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        if (currentPageIndex > 0) {
-          loadPage(currentPageIndex - 1);
-        }
-      } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        if (currentPageIndex < totalPages - 1) {
-          loadPage(currentPageIndex + 1);
-        }
-      }
-    });
-    
-    // Mouse wheel navigation with debounce
-    let wheelTimer = null;
-    document.addEventListener('wheel', function(event) {
-      if (isTransitioning) return;
-      
-      if (wheelTimer !== null) {
-        clearTimeout(wheelTimer);
-      }
-      
-      wheelTimer = setTimeout(() => {
-        if (event.deltaY > 0 && currentPageIndex < totalPages - 1) {
-          // Scrolling down
-          loadPage(currentPageIndex + 1);
-        } else if (event.deltaY < 0 && currentPageIndex > 0) {
-          // Scrolling up
-          loadPage(currentPageIndex - 1);
-        }
-      }, 200); // Adjust debounce time as needed
-    }, { passive: true });
-    
-    // Touch navigation for mobile
-    let touchStartY = 0;
-    let touchEndY = 0;
-    
-    document.addEventListener('touchstart', function(e) {
-      if (isTransitioning) return;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-    
-    document.addEventListener('touchend', function(e) {
-      if (isTransitioning) return;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    }, { passive: true });
-    
-    // Listen for messages from iframes (for menu navigation from iframe pages)
-    window.addEventListener('message', function(event) {
-      if (event.data && event.data.action === 'changePage') {
-        const pageIndex = event.data.pageIndex;
-        if (pageIndex >= 0 && pageIndex < totalPages && !isTransitioning) {
-          loadPage(pageIndex);
-        }
-      }
-      
-      // Handle messages from iframes for cursor coordination
-      if (event.data && event.data.action === 'iframeCursorLeave') {
-        // Show cursor in main window when it leaves an iframe
-        const cursor = document.querySelector('.custom-cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-        
-        if (cursor && cursorDot) {
-          cursor.style.opacity = 1;
-          cursorDot.style.opacity = 1;
-        }
-      }
     });
   }
-  
-  function handleSwipe() {
-    const threshold = 50; // Minimum distance required for swipe
-    if (touchStartY - touchEndY > threshold && currentPageIndex < totalPages - 1) {
-      // Swipe up - go to next page
-      loadPage(currentPageIndex + 1);
-    } else if (touchEndY - touchStartY > threshold && currentPageIndex > 0) {
-      // Swipe down - go to previous page
-      loadPage(currentPageIndex - 1);
-    }
-  }
-  
-  // Initialize
-  function init() {
-    // First, make the cover page visible with "active" class before loading its content
-    // This ensures it's visible immediately
-    const coverPage = document.getElementById('cover');
-    coverPage.classList.add('active');
+
+  // ===== Popup Menu Functionality =====
+  // Initialize GSAP explicitly
+  if (typeof gsap === 'undefined') {
+    console.error('GSAP is not loaded. Please make sure to include the GSAP library.');
+  } else {
+    console.log('GSAP is loaded successfully.');
     
-    // Set up navigation
-    createPageDots();
-    setupEventListeners();
-    updatePageIndicator();
-    updateNavigationButtons();
-    
-    // Load the first page immediately with a higher priority
-    if (!coverPage.dataset.loaded) {
-      // If not loaded yet, load it with high priority
-      loadPageContent(0, true).then(() => {
-        // Make sure the first page stays active after loading
-        coverPage.classList.add('active');
-        // Only after first page is loaded, preload the others
-        setTimeout(preloadPages, 500);
-      });
+    // Check if CustomEase is available and create custom easing functions
+    if (typeof CustomEase !== 'undefined') {
+      CustomEase.create("easeOutFast", "M0,0 C0.25,0.1 0.25,1 1,1"); // Opening ease
+      CustomEase.create("easeInFast", "M0,0 C0.5,0 0.75,0.2 1,1"); // Closing ease
+      console.log('CustomEase initialized successfully');
     } else {
-      // If already loaded somehow, just ensure it's active
-      activatePage(0);
-      // Preload the other pages
-      setTimeout(preloadPages, 500);
+      console.warn('CustomEase not available. Using standard easing functions instead.');
     }
     
-    // Double check cover page is visible after a short delay
-    setTimeout(function() {
-      if (!coverPage.classList.contains('active')) {
-        coverPage.classList.add('active');
-      }
-    }, 1000);
+    // Use direct DOM element references to avoid potential issues with selectors
+    const menuBtn = document.getElementById("menu-btn");
+    const dropdown = document.getElementById("dropdown");
+    const content = document.getElementById("content");
+    const navigation = document.getElementById("navigation");
     
-    // Remove any page dots that might have been created
-    setTimeout(function() {
-      const pageDots = document.querySelector('.page-dots');
-      if (pageDots) {
-        pageDots.remove();
-      }
-    }, 500);
-  }
-  
-  // Make loadPage function globally accessible for menu and other components
-  window.loadPage = loadPage;
-  
-  // Start the app
-  init();
-
-  // Apply arrow animations
-  function setupArrowAnimations() {
-    const arrows = document.querySelectorAll('.nav-button');
+    // Log DOM elements to verify they exist
+    console.log('Menu Button:', menuBtn);
+    console.log('Dropdown:', dropdown);
+    console.log('Content:', content);
+    console.log('Navigation:', navigation);
     
-    arrows.forEach(arrow => {
-      const tail = arrow.querySelector('.arrow-tail');
-      if (tail) {
-        // Initial values for animation
-        tail.style.strokeDasharray = '10';
-        tail.style.strokeDashoffset = '10';
-        tail.style.opacity = '0';
+    if (menuBtn && dropdown && content && navigation) {
+      console.log('All required elements for menu are found');
+      
+      // Track menu state
+      let isOpen = false;
+      
+      // Add click event listener to menu button
+      menuBtn.addEventListener("click", function() {
+        console.log('Menu button clicked. Current state:', isOpen ? 'open' : 'closed');
         
-        // Hover animations
-        arrow.addEventListener('mouseenter', function() {
-          tail.style.transition = 'all 0.3s ease';
-          tail.style.strokeDashoffset = '0';
-          tail.style.opacity = '1';
-        });
-        
-        arrow.addEventListener('mouseleave', function() {
-          tail.style.transition = 'all 0.3s ease';
-          tail.style.strokeDashoffset = '10';
-          tail.style.opacity = '0';
-        });
-        
-        // Click effect
-        arrow.addEventListener('mousedown', function() {
-          tail.style.strokeWidth = '2.5';
+        // Toggle menu state
+        if (!isOpen) {
+          // Opening the menu
+          console.log('Opening menu...');
           
-          setTimeout(() => {
-            tail.style.strokeWidth = '2';
-          }, 300);
-        });
-      }
-    });
-  }
-  
-  // Setup arrow animations after a small delay
-  setTimeout(setupArrowAnimations, 1000);
-
-  // Force font application
-  function applyFonts() {
-    // Create style element
-    const style = document.createElement('style');
-    style.textContent = `
-      @font-face {
-        font-family: 'Migha-BoldExpandedCNTR';
-        src: url('/fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
-      }
-      h1, h2, h3, h4, h5, h6, strong, b, .nav-menu a {
-        font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-      }
-      body, p, span, div {
-        font-family: 'Azeret Mono', monospace !important;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Apply to iframes
-    document.querySelectorAll('iframe').forEach(iframe => {
-      iframe.onload = function() {
-        try {
-          const iframeStyle = document.createElement('style');
-          iframeStyle.textContent = style.textContent;
-          iframe.contentDocument.head.appendChild(iframeStyle);
-        } catch(e) {
-          console.error('Could not apply fonts to iframe:', e);
+          // Create a timeline for synchronized animations
+          const openTimeline = gsap.timeline();
+          
+          // Reset elements first
+          gsap.set(".dropdown__section--one h1, .dropdown__section--one p, .dropdown__button", {
+            opacity: 0,
+            y: 20
+          });
+          
+          // Animation sequence
+          openTimeline
+            .to([dropdown, navigation, content], {
+              y: "50vh",
+              duration: 0.4,
+              ease: typeof CustomEase !== 'undefined' ? "easeOutFast" : "power2.out"
+            })
+            .to(".dropdown__section--one h1", {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              ease: typeof CustomEase !== 'undefined' ? "easeOutFast" : "power2.out"
+            }, "-=0.2")
+            .to(".dropdown__section--one p", {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              ease: typeof CustomEase !== 'undefined' ? "easeOutFast" : "power2.out"
+            }, "-=0.2")
+            .to(".dropdown__button", {
+              opacity: 1,
+              y: 0,
+              duration: 0.3,
+              stagger: 0.1,
+              ease: typeof CustomEase !== 'undefined' ? "easeOutFast" : "power2.out"
+            }, "-=0.2")
+            .to(".divider", {
+              width: "100%",
+              duration: 0.2,
+              ease: typeof CustomEase !== 'undefined' ? "easeOutFast" : "power2.out"
+            }, "-=0.3");
+          
+          // Update UI
+          dropdown.classList.add("open");
+          menuBtn.textContent = "CLOSE";
+          
+        } else {
+          // Closing the menu
+          console.log('Closing menu...');
+          
+          // Create a timeline for synchronized animations
+          const closeTimeline = gsap.timeline();
+          
+          // Animation sequence
+          closeTimeline
+            .to(".dropdown__button", {
+              opacity: 0,
+              y: 20,
+              duration: 0.3,
+              stagger: 0.05,
+              ease: typeof CustomEase !== 'undefined' ? "easeInFast" : "power2.in"
+            })
+            .to(".dropdown__section--one p", {
+              opacity: 0,
+              y: 20,
+              duration: 0.3,
+              ease: typeof CustomEase !== 'undefined' ? "easeInFast" : "power2.in"
+            }, "-=0.1")
+            .to(".dropdown__section--one h1", {
+              opacity: 0,
+              y: 20,
+              duration: 0.3,
+              ease: typeof CustomEase !== 'undefined' ? "easeInFast" : "power2.in"
+            }, "-=0.1")
+            .to(".divider", {
+              width: "0%",
+              duration: 0.4,
+              ease: typeof CustomEase !== 'undefined' ? "easeInFast" : "power2.in"
+            })
+            .to([dropdown, navigation, content], {
+              y: "0",
+              duration: 0.4,
+              ease: typeof CustomEase !== 'undefined' ? "easeInFast" : "power2.in"
+            }, "-=0.2")
+            .call(() => {
+              // Update UI after animations complete
+              dropdown.classList.remove("open");
+              menuBtn.textContent = "MENU";
+            });
         }
-      };
-    });
+        
+        // Toggle state
+        isOpen = !isOpen;
+      });
+      
+      // Close menu when a dropdown button is clicked
+      document.querySelectorAll('.dropdown__button').forEach(button => {
+        button.addEventListener('click', () => {
+          if (isOpen) {
+            console.log('Menu link clicked, closing menu...');
+            menuBtn.click();
+          }
+        });
+      });
+      
+    } else {
+      console.error('One or more required elements for the menu are missing:',
+        menuBtn ? '' : 'Menu Button,',
+        dropdown ? '' : 'Dropdown,',
+        content ? '' : 'Content,',
+        navigation ? '' : 'Navigation'
+      );
+    }
   }
 
-  // Call the function after page load
-  applyFonts();
+  // ===== Projects Section Scripts =====
+  // Check if scroll-driven animations are supported
+  if (!CSS.supports('animation-timeline: scroll()')) {
+    if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function') {
+      gsap.registerPlugin(ScrollTrigger);
+      console.log('ScrollTrigger registered for project animations');
+      
+      // Projects section animations
+      const swappers = document.querySelectorAll('#projects .swapper');
+      console.log('Found swappers:', swappers.length);
+      
+      // Handle swapper animations
+      swappers.forEach((swapper, index) => {
+        console.log(`Setting up animations for swapper ${index+1}`);
+        
+        const controller = swapper.closest('.image-box')?.querySelector('.controller');
+        const images = swapper.querySelectorAll('img');
+        const progressBars = swapper.querySelectorAll('.progress > div > div');
+        
+        if (controller && images.length >= 2) {
+          // Translation animation
+          ScrollTrigger.matchMedia({
+            '(min-width: 768px)': function() {
+              gsap.to(swapper, {
+                y: controller.offsetHeight - swapper.offsetHeight,
+                scrollTrigger: {
+                  trigger: swapper.closest('.image-box'),
+                  scrub: true,
+                  start: 'top center',
+                  end: 'bottom center',
+                }
+              });
+              
+              // Image crossfade
+              gsap.to(images[0], {
+                opacity: 0,
+                scrollTrigger: {
+                  trigger: swapper.closest('.image-box'),
+                  scrub: true,
+                  start: 'center center-=25%',
+                  end: 'bottom center+=25%',
+                }
+              });
+              
+              gsap.to(images[1], {
+                opacity: 1,
+                scrollTrigger: {
+                  trigger: swapper.closest('.image-box'),
+                  scrub: true,
+                  start: 'center center-=25%',
+                  end: 'bottom center+=25%',
+                }
+              });
+              
+              // Progress bar animations
+              if (progressBars.length >= 1) {
+                gsap.to(progressBars[0], {
+                  height: '100%',
+                  scrollTrigger: {
+                    trigger: swapper.closest('.image-box'),
+                    scrub: true,
+                    start: 'top center+=25%',
+                    end: 'center center',
+                  }
+                });
+              }
+              
+              if (progressBars.length >= 2) {
+                gsap.to(progressBars[1], {
+                  height: '100%',
+                  scrollTrigger: {
+                    trigger: swapper.closest('.image-box'),
+                    scrub: true,
+                    start: 'center center',
+                    end: 'bottom center-=25%',
+                  }
+                });
+              }
+            },
+            
+            '(max-width: 767px)': function() {
+              // Mobile animations
+              gsap.to(images[0], {
+                opacity: 0,
+                scrollTrigger: {
+                  trigger: swapper,
+                  scrub: true,
+                  start: 'top center',
+                  end: 'bottom center',
+                }
+              });
+              
+              gsap.to(images[1], {
+                opacity: 1,
+                scrollTrigger: {
+                  trigger: swapper,
+                  scrub: true,
+                  start: 'top center',
+                  end: 'bottom center',
+                }
+              });
+              
+              // Progress bar animations for mobile
+              if (progressBars.length >= 2) {
+                gsap.to([progressBars[0], progressBars[1]], {
+                  height: '100%',
+                  scrollTrigger: {
+                    trigger: swapper,
+                    scrub: true,
+                    start: 'top center',
+                    end: 'bottom center',
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          console.warn(`Missing controller or images for swapper ${index+1}`);
+        }
+      });
+    }
+  }
 });

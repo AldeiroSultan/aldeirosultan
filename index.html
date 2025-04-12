@@ -1,240 +1,320 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Website</title>
+  <title>My Portfolio</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="menu.css">
-  <link rel="stylesheet" href="minimal-arrow-navigation.css">
-  <link rel="stylesheet" href="fonts.css">
-  <!-- Preload font -->
-  <link rel="preload" href="fonts/Migha-BoldExpandedCNTR.otf" as="font" type="font/otf" crossorigin="anonymous">
+  <!-- Import fonts for dropdown menu -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="page-container">
-    <!-- Pages will be loaded here - Note: Cover page has active class -->
-    <div class="page active" id="cover" data-page="cover"></div>
-    <div class="page" id="about" data-page="about"></div>
-    <div class="page" id="intro" data-page="intro"></div>
-    <div class="page" id="experience" data-page="experience"></div>
-    <div class="page" id="projects" data-page="projects"></div>
-    <div class="page" id="contact" data-page="contact"></div>
-  </div>
-  
-  <!-- Minimal Navigation - just arrows, no background, no dots -->
-  <div class="navigation">
-    <button class="nav-button prev" aria-label="Previous page">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button class="nav-button next" aria-label="Next page">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Hamburger Menu Structure -->
-  <div class="hamburger-menu">
-    <div class="hamburger-icon">
-      <span></span>
-      <span></span>
-      <span></span>
+  <!-- Dropdown Menu -->
+  <nav class="navigation" id="navigation">
+    <div class="navigation__container">
+      <div class="navigation__logo">The Portfolio</div>
+      <div class="navigation__menu-btn" id="menu-btn">MENU</div>
+    </div>
+  </nav>
+  <div class="dropdown" id="dropdown">
+    <div class="dropdown__section dropdown__section--one">
+      <h1 class="dropdown__word">CREATE</h1>
+      <p class="dropdown__quote">The best art often comes from the void between words.</p>
+    </div>
+    <div class="dropdown__section dropdown__section--three">
+      <div class="divider"></div>
+      <div class="dropdown__nav">
+        <a href="#cover" class="dropdown__button">Cover</a>
+        <a href="#experience" class="dropdown__button">Experience</a>
+        <a href="#projects" class="dropdown__button">Projects</a>
+        <a href="#contact" class="dropdown__button">Contact</a>
+      </div>
     </div>
   </div>
-  
-  <div class="nav-menu">
-    <ul>
-      <li><a href="#" data-page="cover" data-index="0">Cover</a></li>
-      <li><a href="#" data-page="about" data-index="1">About</a></li>
-      <li><a href="#" data-page="intro" data-index="2">Intro</a></li>
-      <li><a href="#" data-page="experience" data-index="3">Experience</a></li>
-      <li><a href="#" data-page="projects" data-index="4">Projects</a></li>
-      <li><a href="#" data-page="contact" data-index="5">Contact</a></li>
-    </ul>
+  <div class="content" id="content">
+    <!-- Cover Section -->
+    <section id="cover" class="section">
+      <header>
+        <video
+          autoplay
+          muted
+          loop
+          src="https://assets.codepen.io/605876/turntable-opt.mp4"
+        ></video>
+        <div class="cover-content">
+          <h1>
+            <span>CSS Pro</span>
+            <span>Those Little Details</span>
+          </h1>
+          <a aria-hidden="true" href="#experience">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+              />
+            </svg>
+          </a>
+        </div>
+      </header>
+      <div class="reader" id="read">
+        <div class="content">
+          <div class="sr-only">
+            With CSS, you can do way more than you think. One of the most fun CSS
+            animation APIs ever. A magical way to create scroll-driven animations
+            without the need to touch JavaScript. Animations run off the main
+            thread. And you can choose to use View Timelines or Scroll Timelines.
+          </div>
+          <div data-split aria-hidden="true">
+            The little details that make your sites feel great. Combine sticky
+            positioning with some scroll animation. With CSS, you can do way more
+            than you think.
+          </div>
+        </div>
+      </div>
+      <div class="cover-footer">
+        <h2><span>You</span> got this.</h2>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <header class="experience-header">
+        <div class="section-container">
+          <h2 class="section-title">Posts<span>by</span><span>Your Name.</span></h2>
+        </div>
+      </header>
+      <main class="experience-main">
+        <div class="section-container">
+          <ol class="posts-list">
+            <li>
+              <a href="#">CSS in 2024, right?<span>Jan 2024</span></a>
+              <img src="https://picsum.photos/200/200?random=1" alt="" />
+            </li>
+            <li>
+              <a href="#">Taming scroll animations<span>Dec 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=2" alt="" />
+            </li>
+            <li>
+              <a href="#">You :has the power<span>Dec 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=3" alt="" />
+            </li>
+            <li>
+              <a href="#">Infinite marquee without repeated elements<span>Nov 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=4" alt="" />
+            </li>
+            <li>
+              <a href="#">Magic easing with linear()<span>Oct 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=5" alt="" />
+            </li>
+            <li>
+              <a href="#">Taming the CSS glow<span>Oct 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=6" alt="" />
+            </li>
+            <li>
+              <a href="#">Custom cursors? CSS can do that<span>Sep 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=7" alt="" />
+            </li>
+            <li>
+              <a href="#">Making a Jetpack for bears<span>Aug 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=8" alt="" />
+            </li>
+            <li>
+              <a href="#">Balance sliders with one cool hack<span>Aug 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=9" alt="" />
+            </li>
+            <li>
+              <a href="#">What if scrollbars respected radius?<span>Feb 2023</span></a>
+              <img src="https://picsum.photos/200/200?random=10" alt="" />
+            </li>
+          </ol>
+        </div>
+      </main>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <header>
+        <h1><span>All-New</span>CSS Pro</h1>
+        <h2>Scroll-driven crossfades</h2>
+      </header>
+      <main>
+        <section>
+          <div class="image-box">
+            <div class="swapper">
+              <div class="progress">
+                <div><div></div></div>
+                <div><div></div></div>
+              </div>
+              <div class="caption">
+                <h2>Tiny amounts of CSS</h2>
+                <p>Scroll-driven animations give you the ability to drive your CSS animations on scroll.</p>
+              </div>
+              <img src="https://fastly.picsum.photos/id/331/1080/1080.jpg?hmac=sKtPuOzOG1d8p_sVxG4BEL0XGOMPDCvjpN43H9zqW9M" alt="" width="1080" />
+              <img src="https://fastly.picsum.photos/id/536/1080/1080.jpg?hmac=TfR6GPF3n9B6s9bK4hbWAh_1qU8AGdKEOMiQd_nZIhs" alt="" width="1080" />
+            </div>
+            <div class="controller">
+              <img src="https://fastly.picsum.photos/id/1033/1080/1080.jpg?hmac=O43_Fmtq6is3ysXH7ZLNS4iNqCcoWCIEftNR8UK0L5s" alt="" width="1080" />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="image-box">
+            <div class="controller">
+              <img src="https://fastly.picsum.photos/id/827/1080/1080.jpg?hmac=wB2CZUPy2O2MgG8okJtTZZadwwADt7XpjNRIz9fOeME" alt="" width="1080" />
+            </div>
+            <div class="swapper">
+              <div class="progress">
+                <div><div></div></div>
+                <div><div></div></div>
+              </div>
+              <div class="caption">
+                <h2>Cross fading</h2>
+                <p>The trick is one animation to take opacity from 1 to 0. One image uses reverse animation-direction.</p>
+              </div>
+              <img src="https://fastly.picsum.photos/id/378/1080/1080.jpg?hmac=U_xpCJPibwUl5MELHA1W48oscgI19Tsu_zCsFSBen5g" alt="" width="1080" />
+              <img src="https://fastly.picsum.photos/id/781/1080/1080.jpg?hmac=jkgggUr9sBP4qCFAKygIg2lgkcwlZXzll0rwptlFHH4" alt="" width="1080" />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="image-box">
+            <div class="swapper">
+              <div class="progress">
+                <div><div></div></div>
+                <div><div></div></div>
+              </div>
+              <div class="caption">
+                <h2>mix-blend-mode</h2>
+                <p>For a better looking fade, use mix-blend-mode: plus-lighter on the images.</p>
+              </div>
+              <img src="https://fastly.picsum.photos/id/117/1080/1080.jpg?hmac=-9Jpnmxo4_zX7bESbfC1x4y5bAxow3Cvhejo-gZsCIE" alt="" width="1080" />
+              <img src="https://fastly.picsum.photos/id/659/1080/1080.jpg?hmac=_To6fpzA0QnMsx3PTeTwtVxjjbnnNN2rliHf9q0UDNU" alt="" width="1080" />
+            </div>
+            <div class="controller">
+              <img src="https://fastly.picsum.photos/id/358/1080/1080.jpg?hmac=MbMwFskGUIBLvCw3ww1djE0ZnUN3iRw1a9tR_VCSURM" alt="" width="1080" />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="image-box">
+            <div class="controller">
+              <img src="https://fastly.picsum.photos/id/362/1080/1080.jpg?hmac=vzwn2CXU8s21DH7LVZRAozOwmkP5S2iWl2ssJvCv2QA" alt="" width="1080" />
+            </div>
+            <div class="swapper">
+              <div class="progress">
+                <div><div></div></div>
+                <div><div></div></div>
+              </div>
+              <div class="caption">
+                <h2>Driver</h2>
+                <p>Drive the animation based on the container position. Use calc for other effects.</p>
+              </div>
+              <img src="https://fastly.picsum.photos/id/983/1080/1080.jpg?hmac=_pzYklUuqWk6z0X9h9p9xNKJr2sThQoadn5YRCVHa88" alt="" width="1080" />
+              <img src="https://fastly.picsum.photos/id/825/1080/1080.jpg?hmac=XUiCHv4mdtexe6QpAmD4Y_d81clCeLoZKYO6xGtRU6M" alt="" width="1080" />
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>fin.</h2>
+          <h2>Bookmark and follow for more.<br>Polyfilled with GSAP.</h2>
+        </section>
+      </main>
+      <footer>jh3yy &copy; 2024 ʕ •ᴥ•ʔ</footer>
+      <a class="bear-link" href="https://jhey.dev/links" target="_blank" rel="noreferrer noopener">
+        <svg class="w-9" viewBox="0 0 969 955" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="161.191" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="806.809" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="695.019" cy="587.733" r="31.4016" fill="currentColor"></circle><circle cx="272.981" cy="587.733" r="31.4016" fill="currentColor"></circle><path d="M564.388 712.083C564.388 743.994 526.035 779.911 483.372 779.911C440.709 779.911 402.356 743.994 402.356 712.083C402.356 680.173 440.709 664.353 483.372 664.353C526.035 664.353 564.388 680.173 564.388 712.083Z" fill="currentColor"></path><rect x="310.42" y="448.31" width="343.468" height="51.4986" fill="#FF1E1E"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z" fill="currentColor"></path></svg>
+      </a>
+      <a class="x-link" href="https://twitter.com/intent/follow?screen_name=jh3yy" target="_blank" rel="noreferrer noopener">
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      </a>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="slides">
+        <div class="container">
+          <nav>
+            <div class="content">
+              <!-- Navigation content -->
+            </div>
+          </nav>
+          <header aria-hidden="true">
+            <h1>Contact Me</h1>
+          </header>
+          <main>
+            <div>
+              <header>
+                <h1>Contact Me</h1>
+              </header>
+              <section>
+                <img src="https://assets.codepen.io/605876/stage-fuel.jpeg" alt="Stage image" />
+              </section>
+            </div>
+            <section>
+              <div class="content social-icons">
+                <!-- GitHub Icon -->
+                <a href="#" class="social-icon" aria-label="GitHub">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                
+                <!-- LinkedIn Icon -->
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                </a>
+                
+                <!-- Gmail Icon -->
+                <a href="#" class="social-icon" aria-label="Email">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M24 4.5v15c0 .85-.65 1.5-1.5 1.5H21V7.387l-9 6.463-9-6.463V21H1.5C.649 21 0 20.35 0 19.5v-15c0-.425.162-.8.431-1.068C.7 3.16 1.076 3 1.5 3H2l10 7.25L22 3h.5c.425 0 .8.162 1.069.432.27.268.431.643.431 1.068z"/>
+                  </svg>
+                </a>
+                
+                <!-- Instagram Icon -->
+                <a href="#" class="social-icon" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+              </div>
+            </section>
+            <footer>
+              <div class="content">@jh3yy &copy; 2024 ┬┴┬┴┤•ᴥ•ʔ├┬┴┬┴</div>
+            </footer>
+          </main>
+        </div>
+        <div class="captioner">
+          <div class="caption caption--main">Clip the top of &lt;main&gt;.<br />Hides the sticky header.</div>
+          <div class="caption caption--sticky">Sticky position header<br />inside &lt;main&gt;<br />that's clipped to start.</div>
+        </div>
+        <div class="clipper">
+          <div class="caption">Fixed position header<br />sits behind and<br />then gets covered<br />by &lt;main&gt;.</div>
+          <header aria-hidden="true">
+            <h1>Contact Me</h1>
+          </header>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Footer -->
+    <footer id="global-footer">
+      <div class="content">jh3yy &copy; 2025 ʕ •ᴥ•ʔ</div>
+    </footer>
   </div>
-  
-  <div class="menu-overlay"></div>
 
-  <!-- Original scripts plus minimal animation -->
+  <script src="https://cdn.skypack.dev/gsap@3.12.0"></script>
+  <script src="https://cdn.skypack.dev/gsap@3.12.0/ScrollTrigger"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/CustomEase.min.js"></script>
   <script src="main.js"></script>
-  <script src="menu.js"></script>
-  <script>
-    // Remove any page dots that might be created by main.js
-    document.addEventListener('DOMContentLoaded', function() {
-      // Function to remove page dots
-      function removePageDots() {
-        const pageDots = document.querySelector('.page-dots');
-        if (pageDots) {
-          pageDots.remove();
-        }
-      }
-      
-      // Run immediately
-      removePageDots();
-      
-      // Also run after a short delay in case they're created later
-      setTimeout(removePageDots, 500);
-      setTimeout(removePageDots, 1000);
-      
-      // Observer to remove dots if they get added dynamically
-      const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-          if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach(node => {
-              if (node.classList && node.classList.contains('page-dots')) {
-                node.remove();
-              }
-            });
-          }
-        });
-      });
-      
-      // Start observing the navigation element
-      const navigation = document.querySelector('.navigation');
-      if (navigation) {
-        observer.observe(navigation, { childList: true, subtree: true });
-      }
-      
-      // Handle arrow animations
-      const arrows = document.querySelectorAll('.nav-button');
-      arrows.forEach(arrow => {
-        const tail = arrow.querySelector('.arrow-tail');
-        if (tail) {
-          arrow.addEventListener('mouseenter', function() {
-            tail.style.transition = 'all 0.3s ease';
-            tail.style.strokeDashoffset = '0';
-            tail.style.opacity = '1';
-          });
-          
-          arrow.addEventListener('mouseleave', function() {
-            tail.style.transition = 'all 0.3s ease';
-            tail.style.strokeDashoffset = '10';
-            tail.style.opacity = '0';
-          });
-        }
-      });
-    });
-  </script>
-
-  <!-- Inline font enforcer -->
-  <script>
-    (function() {
-      document.addEventListener('DOMContentLoaded', function() {
-        // Preload font
-        const fontPreload = document.createElement('link');
-        fontPreload.rel = 'preload';
-        fontPreload.href = './fonts/Migha-BoldExpandedCNTR.otf';
-        fontPreload.as = 'font';
-        fontPreload.type = 'font/otf';
-        fontPreload.crossOrigin = 'anonymous';
-        document.head.appendChild(fontPreload);
-        
-        // Add font-face definition
-        const fontFaceStyle = document.createElement('style');
-        fontFaceStyle.textContent = `
-          @font-face {
-            font-family: 'Migha-BoldExpandedCNTR';
-            src: url('./fonts/Migha-BoldExpandedCNTR.otf') format('opentype');
-            font-weight: bold;
-            font-style: normal;
-            font-display: swap;
-          }
-          
-          /* Universal selectors with maximum specificity */
-          html body h1, 
-          html body h2, 
-          html body h3, 
-          html body h4, 
-          html body h5, 
-          html body h6,
-          html body .title,
-          html body .page-title,
-          html body .section-title,
-          html body strong, 
-          html body b,
-          html body .nav-menu a,
-          html body .typewriter,
-          html body [data-split],
-          html body li::marker,
-          html body .fluid,
-          html body article h3 {
-            font-family: 'Migha-BoldExpandedCNTR', Arial, sans-serif !important;
-          }
-          
-          html body, 
-          html body p, 
-          html body div:not(.nav-menu), 
-          html body span, 
-          html body li:not(.nav-menu li),
-          html body .subtitle, 
-          html body .caption, 
-          html body .info:not(.info h3), 
-          html body .subheading, 
-          html body .paragraph {
-            font-family: 'Azeret Mono', monospace !important;
-          }
-        `;
-        document.head.appendChild(fontFaceStyle);
-        
-        // Handle iframes
-        const handleIframe = (iframe) => {
-          if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-            injectFontIntoIframe(iframe);
-          } else {
-            iframe.onload = function() {
-              injectFontIntoIframe(iframe);
-            };
-          }
-        };
-        
-        const injectFontIntoIframe = (iframe) => {
-          try {
-            if (!iframe.contentDocument) return;
-            
-            const iframeFontStyle = document.createElement('style');
-            iframeFontStyle.textContent = fontFaceStyle.textContent;
-            iframe.contentDocument.head.appendChild(iframeFontStyle);
-            
-            // Apply direct style to specific elements
-            const headingElements = iframe.contentDocument.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            headingElements.forEach(el => {
-              el.style.fontFamily = "'Migha-BoldExpandedCNTR', Arial, sans-serif";
-            });
-            
-            // Handle nested iframes
-            iframe.contentDocument.querySelectorAll('iframe').forEach(nestedIframe => {
-              handleIframe(nestedIframe);
-            });
-          } catch(e) {
-            console.error('Could not inject font into iframe:', e);
-          }
-        };
-        
-        // Process existing iframes
-        document.querySelectorAll('iframe').forEach(iframe => {
-          handleIframe(iframe);
-        });
-        
-        // Watch for dynamically added iframes
-        const observer = new MutationObserver(mutations => {
-          mutations.forEach(mutation => {
-            mutation.addedNodes.forEach(node => {
-              if (node.tagName === 'IFRAME') {
-                handleIframe(node);
-              }
-            });
-          });
-        });
-        
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-      });
-    })();
-  </script>
 </body>
 </html>
