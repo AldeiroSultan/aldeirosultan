@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="styles.css">
   <!-- Import fonts for dropdown menu -->
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <!-- Import Swiper CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css">
+  <!-- Import Cormorant fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400,500,500i,600,600i,700,700i|Cormorant+SC:400,500,600,700" rel="stylesheet">
+  <!-- Import Split View Animation fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Space+Grotesk&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Dropdown Menu -->
@@ -25,8 +31,10 @@
       <div class="divider"></div>
       <div class="dropdown__nav">
         <a href="#cover" class="dropdown__button">Cover</a>
+        <a href="#split-view-animation" class="dropdown__button">Split View</a>
         <a href="#experience" class="dropdown__button">Experience</a>
         <a href="#projects" class="dropdown__button">Projects</a>
+        <a href="#story-slider" class="dropdown__button">Stories</a>
         <a href="#contact" class="dropdown__button">Contact</a>
       </div>
     </div>
@@ -46,7 +54,7 @@
             <span>CSS Pro</span>
             <span>Those Little Details</span>
           </h1>
-          <a aria-hidden="true" href="#experience">
+          <a aria-hidden="true" href="#split-view-animation">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -72,15 +80,62 @@
             without the need to touch JavaScript. Animations run off the main
             thread. And you can choose to use View Timelines or Scroll Timelines.
           </div>
-          <div data-split aria-hidden="true">
-            The little details that make your sites feel great. Combine sticky
-            positioning with some scroll animation. With CSS, you can do way more
-            than you think.
+          
+          <!-- Modified text with images and no background boxes -->
+          <div class="image-text-container">
+            <h1 class="image-text">
+              <span>A</span>
+              <span class="image-inline">
+                <img src="https://picsum.photos/300/300?random=1" alt="Mountain image" class="inline-image">
+              </span>
+              <span>tiny</span>
+              <span>mountain</span>
+              <span>village</span>
+              <span class="image-inline">
+                <img src="https://picsum.photos/300/300?random=2" alt="Landscape image" class="inline-image">
+              </span>
+              <span>where</span>
+              <span>it</span>
+              <span>all</span>
+              <span>began...</span>
+              <span class="image-inline">
+                <img src="https://picsum.photos/300/300?random=3" alt="Person image" class="inline-image">
+              </span>
+            </h1>
+            
+            <!-- Added bio paragraph -->
+            <p class="photographer-bio">
+              Giulia Gartner (@giuligartner) is an outdoor, travel, and commercial photographer, 
+              filmmaker, and storyteller from the Dolomites in northern Italy. Her work focuses on 
+              capturing wild and rugged landscapes with a vivid color palette and dreamy 
+              elements. Her love for photography has spilled over into filmmaking which is one of 
+              the main creative outlets she pursues today.
+            </p>
           </div>
         </div>
       </div>
       <div class="cover-footer">
         <h2><span>You</span> got this.</h2>
+      </div>
+    </section>
+    
+    <!-- Split View Animation Section -->
+    <section id="split-view-animation" class="split-view-container section">
+      <div class="container">
+        <div class="box box-left">
+          <div class="content">
+            <h2>Explore Nature</h2>
+            <p>Discover the beauty of natural landscapes and immerse yourself in the serenity of the wild.</p>
+            <span class="number">01</span>
+          </div>
+        </div>
+        <div class="box box-right">
+          <div class="content">
+            <h2>Urban Adventures</h2>
+            <p>Experience the excitement of urban life and uncover hidden gems in bustling cities.</p>
+            <span class="number">02</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -141,99 +196,206 @@
 
     <!-- Projects Section -->
     <section id="projects" class="section">
-      <header>
-        <h1><span>All-New</span>CSS Pro</h1>
-        <h2>Scroll-driven crossfades</h2>
-      </header>
-      <main>
-        <section>
-          <div class="image-box">
-            <div class="swapper">
-              <div class="progress">
-                <div><div></div></div>
-                <div><div></div></div>
-              </div>
-              <div class="caption">
-                <h2>Tiny amounts of CSS</h2>
-                <p>Scroll-driven animations give you the ability to drive your CSS animations on scroll.</p>
-              </div>
-              <img src="https://fastly.picsum.photos/id/331/1080/1080.jpg?hmac=sKtPuOzOG1d8p_sVxG4BEL0XGOMPDCvjpN43H9zqW9M" alt="" width="1080" />
-              <img src="https://fastly.picsum.photos/id/536/1080/1080.jpg?hmac=TfR6GPF3n9B6s9bK4hbWAh_1qU8AGdKEOMiQd_nZIhs" alt="" width="1080" />
+      <!-- Simple marquee gallery with normal rows -->
+      <section class="marquee-section">
+        <div class="marquee-header">
+          <h2>Project Gallery</h2>
+          <p>Explore our latest projects</p>
+        </div>
+        
+        <!-- Added overlay with "Check this out" text and button -->
+        <div class="marquee-overlay">
+          <h3>Check this out</h3>
+          <a href="#story-slider" class="marquee-button">View Stories</a>
+        </div>
+        
+        <div class="marquee-container">
+          <!-- First row - moves left to right -->
+          <div class="marquee-track marquee-track--forward">
+            <div class="marquee-item" style="width: 280px;">
+              <img src="https://picsum.photos/300/180?random=1" alt="Project image">
+              <div class="marquee-caption">Mountain Project</div>
             </div>
-            <div class="controller">
-              <img src="https://fastly.picsum.photos/id/1033/1080/1080.jpg?hmac=O43_Fmtq6is3ysXH7ZLNS4iNqCcoWCIEftNR8UK0L5s" alt="" width="1080" />
+            <div class="marquee-item" style="width: 220px;">
+              <img src="https://picsum.photos/300/180?random=2" alt="Project image">
+              <div class="marquee-caption">Nature Study</div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div class="image-box">
-            <div class="controller">
-              <img src="https://fastly.picsum.photos/id/827/1080/1080.jpg?hmac=wB2CZUPy2O2MgG8okJtTZZadwwADt7XpjNRIz9fOeME" alt="" width="1080" />
+            <div class="marquee-item" style="width: 320px;">
+              <img src="https://picsum.photos/300/180?random=3" alt="Project image">
+              <div class="marquee-caption">Urban Design</div>
             </div>
-            <div class="swapper">
-              <div class="progress">
-                <div><div></div></div>
-                <div><div></div></div>
-              </div>
-              <div class="caption">
-                <h2>Cross fading</h2>
-                <p>The trick is one animation to take opacity from 1 to 0. One image uses reverse animation-direction.</p>
-              </div>
-              <img src="https://fastly.picsum.photos/id/378/1080/1080.jpg?hmac=U_xpCJPibwUl5MELHA1W48oscgI19Tsu_zCsFSBen5g" alt="" width="1080" />
-              <img src="https://fastly.picsum.photos/id/781/1080/1080.jpg?hmac=jkgggUr9sBP4qCFAKygIg2lgkcwlZXzll0rwptlFHH4" alt="" width="1080" />
+            <div class="marquee-item" style="width: 250px;">
+              <img src="https://picsum.photos/300/180?random=4" alt="Project image">
+              <div class="marquee-caption">Abstract Art</div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div class="image-box">
-            <div class="swapper">
-              <div class="progress">
-                <div><div></div></div>
-                <div><div></div></div>
-              </div>
-              <div class="caption">
-                <h2>mix-blend-mode</h2>
-                <p>For a better looking fade, use mix-blend-mode: plus-lighter on the images.</p>
-              </div>
-              <img src="https://fastly.picsum.photos/id/117/1080/1080.jpg?hmac=-9Jpnmxo4_zX7bESbfC1x4y5bAxow3Cvhejo-gZsCIE" alt="" width="1080" />
-              <img src="https://fastly.picsum.photos/id/659/1080/1080.jpg?hmac=_To6fpzA0QnMsx3PTeTwtVxjjbnnNN2rliHf9q0UDNU" alt="" width="1080" />
+            <div class="marquee-item" style="width: 290px;">
+              <img src="https://picsum.photos/300/180?random=5" alt="Project image">
+              <div class="marquee-caption">Landscape</div>
             </div>
-            <div class="controller">
-              <img src="https://fastly.picsum.photos/id/358/1080/1080.jpg?hmac=MbMwFskGUIBLvCw3ww1djE0ZnUN3iRw1a9tR_VCSURM" alt="" width="1080" />
+            <div class="marquee-item" style="width: 240px;">
+              <img src="https://picsum.photos/300/180?random=6" alt="Project image">
+              <div class="marquee-caption">Portrait Study</div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div class="image-box">
-            <div class="controller">
-              <img src="https://fastly.picsum.photos/id/362/1080/1080.jpg?hmac=vzwn2CXU8s21DH7LVZRAozOwmkP5S2iWl2ssJvCv2QA" alt="" width="1080" />
+            <div class="marquee-item" style="width: 300px;">
+              <img src="https://picsum.photos/300/180?random=7" alt="Project image">
+              <div class="marquee-caption">Texture Study</div>
             </div>
-            <div class="swapper">
-              <div class="progress">
-                <div><div></div></div>
-                <div><div></div></div>
-              </div>
-              <div class="caption">
-                <h2>Driver</h2>
-                <p>Drive the animation based on the container position. Use calc for other effects.</p>
-              </div>
-              <img src="https://fastly.picsum.photos/id/983/1080/1080.jpg?hmac=_pzYklUuqWk6z0X9h9p9xNKJr2sThQoadn5YRCVHa88" alt="" width="1080" />
-              <img src="https://fastly.picsum.photos/id/825/1080/1080.jpg?hmac=XUiCHv4mdtexe6QpAmD4Y_d81clCeLoZKYO6xGtRU6M" alt="" width="1080" />
+            <!-- Duplicate set for seamless loop -->
+            <div class="marquee-item" style="width: 280px;">
+              <img src="https://picsum.photos/300/180?random=1" alt="Project image">
+              <div class="marquee-caption">Mountain Project</div>
+            </div>
+            <div class="marquee-item" style="width: 220px;">
+              <img src="https://picsum.photos/300/180?random=2" alt="Project image">
+              <div class="marquee-caption">Nature Study</div>
+            </div>
+            <div class="marquee-item" style="width: 320px;">
+              <img src="https://picsum.photos/300/180?random=3" alt="Project image">
+              <div class="marquee-caption">Urban Design</div>
+            </div>
+            <div class="marquee-item" style="width: 250px;">
+              <img src="https://picsum.photos/300/180?random=4" alt="Project image">
+              <div class="marquee-caption">Abstract Art</div>
+            </div>
+            <div class="marquee-item" style="width: 290px;">
+              <img src="https://picsum.photos/300/180?random=5" alt="Project image">
+              <div class="marquee-caption">Landscape</div>
+            </div>
+            <div class="marquee-item" style="width: 240px;">
+              <img src="https://picsum.photos/300/180?random=6" alt="Project image">
+              <div class="marquee-caption">Portrait Study</div>
+            </div>
+            <div class="marquee-item" style="width: 300px;">
+              <img src="https://picsum.photos/300/180?random=7" alt="Project image">
+              <div class="marquee-caption">Texture Study</div>
             </div>
           </div>
-        </section>
-        <section>
-          <h2>fin.</h2>
-          <h2>Bookmark and follow for more.<br>Polyfilled with GSAP.</h2>
-        </section>
-      </main>
-      <footer>jh3yy &copy; 2025 ʕ •ᴥ•ʔ</footer>
-      <a class="bear-link" href="https://jhey.dev/links" target="_blank" rel="noreferrer noopener">
-        <svg class="w-9" viewBox="0 0 969 955" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="161.191" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="806.809" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="695.019" cy="587.733" r="31.4016" fill="currentColor"></circle><circle cx="272.981" cy="587.733" r="31.4016" fill="currentColor"></circle><path d="M564.388 712.083C564.388 743.994 526.035 779.911 483.372 779.911C440.709 779.911 402.356 743.994 402.356 712.083C402.356 680.173 440.709 664.353 483.372 664.353C526.035 664.353 564.388 680.173 564.388 712.083Z" fill="currentColor"></path><rect x="310.42" y="448.31" width="343.468" height="51.4986" fill="#FF1E1E"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z" fill="currentColor"></path></svg>
-      </a>
-      <a class="x-link" href="https://twitter.com/intent/follow?screen_name=jh3yy" target="_blank" rel="noreferrer noopener">
-        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-      </a>
+          
+          <!-- Second row - moves right to left (reverse) -->
+          <div class="marquee-track marquee-track--reverse">
+            <div class="marquee-item" style="width: 300px;">
+              <img src="https://picsum.photos/300/180?random=8" alt="Project image">
+              <div class="marquee-caption">Water Project</div>
+            </div>
+            <div class="marquee-item" style="width: 240px;">
+              <img src="https://picsum.photos/300/180?random=9" alt="Project image">
+              <div class="marquee-caption">Architecture</div>
+            </div>
+            <div class="marquee-item" style="width: 320px;">
+              <img src="https://picsum.photos/300/180?random=10" alt="Project image">
+              <div class="marquee-caption">Minimal Study</div>
+            </div>
+            <div class="marquee-item" style="width: 260px;">
+              <img src="https://picsum.photos/300/180?random=11" alt="Project image">
+              <div class="marquee-caption">Color Theory</div>
+            </div>
+            <div class="marquee-item" style="width: 230px;">
+              <img src="https://picsum.photos/300/180?random=12" alt="Project image">
+              <div class="marquee-caption">Desert View</div>
+            </div>
+            <div class="marquee-item" style="width: 280px;">
+              <img src="https://picsum.photos/300/180?random=13" alt="Project image">
+              <div class="marquee-caption">Pattern Work</div>
+            </div>
+            <div class="marquee-item" style="width: 310px;">
+              <img src="https://picsum.photos/300/180?random=14" alt="Project image">
+              <div class="marquee-caption">Abstract Form</div>
+            </div>
+            <!-- Duplicate set for seamless loop -->
+            <div class="marquee-item" style="width: 300px;">
+              <img src="https://picsum.photos/300/180?random=8" alt="Project image">
+              <div class="marquee-caption">Water Project</div>
+            </div>
+            <div class="marquee-item" style="width: 240px;">
+              <img src="https://picsum.photos/300/180?random=9" alt="Project image">
+              <div class="marquee-caption">Architecture</div>
+            </div>
+            <div class="marquee-item" style="width: 320px;">
+              <img src="https://picsum.photos/300/180?random=10" alt="Project image">
+              <div class="marquee-caption">Minimal Study</div>
+            </div>
+            <div class="marquee-item" style="width: 260px;">
+              <img src="https://picsum.photos/300/180?random=11" alt="Project image">
+              <div class="marquee-caption">Color Theory</div>
+            </div>
+            <div class="marquee-item" style="width: 230px;">
+              <img src="https://picsum.photos/300/180?random=12" alt="Project image">
+              <div class="marquee-caption">Desert View</div>
+            </div>
+            <div class="marquee-item" style="width: 280px;">
+              <img src="https://picsum.photos/300/180?random=13" alt="Project image">
+              <div class="marquee-caption">Pattern Work</div>
+            </div>
+            <div class="marquee-item" style="width: 310px;">
+              <img src="https://picsum.photos/300/180?random=14" alt="Project image">
+              <div class="marquee-caption">Abstract Form</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Projects Heading -->
+    <div class="section-heading-container">
+      <h2 class="section-heading">Projects</h2>
+    </div>
+
+    <!-- Story Slider Section (from projects.html) -->
+    <section id="story-slider" class="section">
+      <div id="home-slider">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="swiper-image" data-swiper-parallax-y="-20%">
+                <div class="swiper-image-inner swiper-image-left">
+                  <h1>A <span class="emphasis">Breath</span>. <br><span>Of Fresh Air.</span></h1>
+                  <p>Chapter I, page XV</p>
+                </div>
+              </div>
+              <div class="swiper-image" data-swiper-parallax-y="35%">
+                <div class="swiper-image-inner swiper-image-right">
+                  <p class="paragraph">
+                    A Prophet sat in the market-place and told the fortunes of all who cared to engage his services. Suddenly there came running up one who told him that his house had been broken into by thieves, and that they had made off with everything they could lay
+                    hands on.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="swiper-image" data-swiper-parallax-y="-20%">
+                <div class="swiper-image-inner swiper-image-left">
+                  <h1>The <span class="emphasis">Drop</span>. <br><span>Of Eternal life.</span></h1>
+                  <p>Chapter II, page VII</p>
+                </div>
+              </div>
+              <div class="swiper-image" data-swiper-parallax-y="35%">
+                <div class="swiper-image-inner swiper-image-right">
+                  <p class="paragraph">
+                    A thirsty Crow found a Pitcher with some water in it, but so little was there that, try as she might, she could not reach it with her beak, and it seemed as though she would die of thirst within sight of the remedy.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="swiper-image" data-swiper-parallax-y="-20%">
+                <div class="swiper-image-inner swiper-image-left">
+                  <h1>A <span class="emphasis">Sense</span>. <br><span>Of Things to Come.</span></h1>
+                  <p>Chapter III, page XI</p>
+                </div>
+              </div>
+              <div class="swiper-image" data-swiper-parallax-y="35%">
+                <div class="swiper-image-inner swiper-image-right">
+                  <p class="paragraph">
+                    Every man carries Two Bags about with him, one in front and one behind, and both are packed full of faults. The Bag in front contains his neighbours' faults, the one behind his own. Hence it is that men do not see their own faults, but never fail to see
+                    those of others.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
@@ -316,6 +478,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/CustomEase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
   <script src="main.js"></script>
+  <script src="slider-script.js"></script>
+  <script src="split-view-script.js"></script>
+  <script src="grid-background.js"></script>
 </body>
 </html>

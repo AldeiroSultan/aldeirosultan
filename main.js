@@ -19,27 +19,52 @@ document.addEventListener("DOMContentLoaded", function() {
     document.documentElement.style.setProperty('--pad', 8);
     document.documentElement.style.setProperty('--content-length', contentLength + 2);
     document.documentElement.style.setProperty('--base', '0.3');
-    
-    // Split the text into individual spans
-    const words = toSplit.innerText.split(' ');
-    toSplit.innerHTML = '';
-
-    let cumulation = 10;
-    words.forEach((word, index) => {
-      const text = document.createElement('span');
-      text.innerHTML = `<span>${word} </span>`;
-      text.style = `
-        --index: ${index};
-        --start: ${cumulation};
-        --end: ${cumulation + word.length};
-      `;
-      text.dataset.index = index;
-      text.dataset.start = cumulation;
-      text.dataset.end = cumulation + word.length;
-      cumulation += word.length + 1;
-      toSplit.appendChild(text);
-    });
   }
+
+  // ===== Name overlay animation fallback for browsers without scroll-driven animations =====
+  if (!CSS.supports('animation-timeline: scroll()')) {
+    const nameContainer = document.querySelector('.name-overlay-container');
+    const overlayName = document.querySelector('.overlay-name');
+    const overlayImage = document.querySelector('.overlay-image');
+    
+    if (nameContainer) {
+      window.addEventListener('scroll', function() {
+        const containerTop = nameContainer.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        // Calculate the scroll progress within the container
+        const scrollProgress = 1 - (containerTop / windowHeight);
+        
+        if (scrollProgress >= 0 && scrollProgress <= 1) {
+          // Apply scaling and opacity changes based on scroll position
+          const scale = 1 + (scrollProgress * 0.2);
+          const opacity = 1 - (scrollProgress * 0.8);
+          
+          overlayName.style.transform = `scale(${scale})`;
+          overlayName.style.opacity = opacity;
+          
+          overlayImage.style.transform = `translateY(${20 - scrollProgress * 20}px)`;
+          overlayImage.style.opacity = 0.7 + (scrollProgress * 0.3);
+        }
+      });
+    }
+  }
+  
+  // Add class to body when scrolled for name overlay animation
+  window.addEventListener('scroll', function() {
+    const cover = document.getElementById('cover');
+    const nameContainer = document.querySelector('.name-overlay-container');
+    
+    if (cover && nameContainer) {
+      const containerRect = nameContainer.getBoundingClientRect();
+      
+      if (containerRect.top < window.innerHeight * 0.5) {
+        cover.classList.add('has-scrolled');
+      } else {
+        cover.classList.remove('has-scrolled');
+      }
+    }
+  });
 
   // ===== Experience Section Animations =====
   // Cursor effect for experience section's post list
@@ -189,128 +214,66 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // ===== Projects Section Animations =====
-  // Check if scroll-driven animations are supported
-  if (!CSS.supports('animation-timeline: scroll()')) {
-    if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-      
-      // Projects section animations
-      const swappers = document.querySelectorAll('#projects .swapper');
-      
-      // Handle swapper animations
-      swappers.forEach((swapper) => {
-        const controller = swapper.closest('.image-box')?.querySelector('.controller');
-        const images = swapper.querySelectorAll('img');
-        const progressBars = swapper.querySelectorAll('.progress > div > div');
+  // ===== Marquee Animations =====
+  // Fallback for browsers that don't support CSS animations
+  if (!CSS.supports('animation-timeline: scroll()') || !CSS.supports('animation-name: marquee-forward')) {
+    if (typeof gsap !== 'undefined') {
+      // Animate the forward track
+      const forwardTrack = document.querySelector('.marquee-track--forward');
+      if (forwardTrack) {
+        gsap.to(forwardTrack, {
+          x: '-50%',
+          repeat: -1,
+          duration: 40,
+          ease: 'none',
+          onRepeat: () => {
+            gsap.set(forwardTrack, { x: '0%' });
+          }
+        });
         
-        if (controller && images.length >= 2) {
-          // Translation animation
-          ScrollTrigger.matchMedia({
-            '(min-width: 768px)': function() {
-              gsap.to(swapper, {
-                y: controller.offsetHeight - swapper.offsetHeight,
-                scrollTrigger: {
-                  trigger: swapper.closest('.image-box'),
-                  scrub: true,
-                  start: 'top center',
-                  end: 'bottom center',
-                }
-              });
-              
-              // Image crossfade
-              gsap.to(images[0], {
-                opacity: 0,
-                scrollTrigger: {
-                  trigger: swapper.closest('.image-box'),
-                  scrub: true,
-                  start: 'center center-=25%',
-                  end: 'bottom center+=25%',
-                }
-              });
-              
-              gsap.to(images[1], {
-                opacity: 1,
-                scrollTrigger: {
-                  trigger: swapper.closest('.image-box'),
-                  scrub: true,
-                  start: 'center center-=25%',
-                  end: 'bottom center+=25%',
-                }
-              });
-              
-              // Progress bar animations
-              if (progressBars.length >= 1) {
-                gsap.to(progressBars[0], {
-                  height: '100%',
-                  scrollTrigger: {
-                    trigger: swapper.closest('.image-box'),
-                    scrub: true,
-                    start: 'top center+=25%',
-                    end: 'center center',
-                  }
-                });
-              }
-              
-              if (progressBars.length >= 2) {
-                gsap.to(progressBars[1], {
-                  height: '100%',
-                  scrollTrigger: {
-                    trigger: swapper.closest('.image-box'),
-                    scrub: true,
-                    start: 'center center',
-                    end: 'bottom center-=25%',
-                  }
-                });
-              }
-            },
-            
-            '(max-width: 767px)': function() {
-              // Mobile animations
-              gsap.to(images[0], {
-                opacity: 0,
-                scrollTrigger: {
-                  trigger: swapper,
-                  scrub: true,
-                  start: 'top center',
-                  end: 'bottom center',
-                }
-              });
-              
-              gsap.to(images[1], {
-                opacity: 1,
-                scrollTrigger: {
-                  trigger: swapper,
-                  scrub: true,
-                  start: 'top center',
-                  end: 'bottom center',
-                }
-              });
-              
-              // Progress bar animations for mobile
-              if (progressBars.length >= 2) {
-                gsap.to([progressBars[0], progressBars[1]], {
-                  height: '100%',
-                  scrollTrigger: {
-                    trigger: swapper,
-                    scrub: true,
-                    start: 'top center',
-                    end: 'bottom center',
-                  }
-                });
-              }
+        // Pause on hover
+        forwardTrack.addEventListener('mouseenter', () => {
+          gsap.to(forwardTrack.animation, { timeScale: 0, duration: 0.5 });
+        });
+        
+        forwardTrack.addEventListener('mouseleave', () => {
+          gsap.to(forwardTrack.animation, { timeScale: 1, duration: 0.5 });
+        });
+      }
+      
+      // Animate the reverse track
+      const reverseTrack = document.querySelector('.marquee-track--reverse');
+      if (reverseTrack) {
+        gsap.fromTo(reverseTrack, 
+          { x: '-50%' },
+          {
+            x: '0%',
+            repeat: -1,
+            duration: 35,
+            ease: 'none',
+            onRepeat: () => {
+              gsap.set(reverseTrack, { x: '-50%' });
             }
-          });
-        }
-      });
+          }
+        );
+        
+        // Pause on hover
+        reverseTrack.addEventListener('mouseenter', () => {
+          gsap.to(reverseTrack.animation, { timeScale: 0, duration: 0.5 });
+        });
+        
+        reverseTrack.addEventListener('mouseleave', () => {
+          gsap.to(reverseTrack.animation, { timeScale: 1, duration: 0.5 });
+        });
+      }
     }
   }
 
-  // ===== Cover Section Text Animation Fallback =====
+ // ===== Cover Section Text Animation Fallback =====
   // Fallback for browsers that don't support scroll-driven animations
   if (!CSS.supports('animation-timeline: scroll()')) {
     if (typeof gsap !== 'undefined' && typeof gsap.registerPlugin === 'function' && typeof ScrollTrigger !== 'undefined') {
-      const contentSpans = document.querySelectorAll('[data-split] span');
+      const contentSpans = document.querySelectorAll('.image-text span:not(.image-inline)');
       if (contentSpans.length > 0) {
         gsap.set(contentSpans, {
           opacity: 0.3,
@@ -318,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         
         ScrollTrigger.create({
-          trigger: ".reader",
+          trigger: ".image-text-container",
           start: "top 80%",
           end: "center 30%",
           scrub: true,
@@ -338,6 +301,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         });
         
+        // Scale the header on scroll
         gsap.to("#cover header", {
           scale: 0.8,
           scrollTrigger: {
@@ -349,6 +313,37 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       }
     }
+  }
+
+  // Add hover animations to inline images
+  const inlineImages = document.querySelectorAll('.image-inline');
+  inlineImages.forEach(image => {
+    image.addEventListener('mouseenter', () => {
+      image.style.transform = 'scale(1.2)';
+      image.style.zIndex = '10';
+    });
+    
+    image.addEventListener('mouseleave', () => {
+      image.style.transform = 'scale(1)';
+      image.style.zIndex = '1';
+    });
+  });
+
+  // ===== Story Slider Animation =====
+  // Initialize Swiper if available
+  if (typeof Swiper !== 'undefined') {
+    var mySwiper = new Swiper(".swiper-container", {
+      direction: "vertical",
+      loop: true,
+      pagination: ".swiper-pagination",
+      grabCursor: true,
+      speed: 1000,
+      paginationClickable: true,
+      parallax: true,
+      autoplay: false,
+      effect: "slide",
+      mousewheelControl: 1
+    });
   }
 
   // ===== Contact Section Animations =====

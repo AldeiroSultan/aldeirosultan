@@ -1,0 +1,228 @@
+/* Import split view animation fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Space+Grotesk&display=swap');
+
+/* Split View Animation Styles */
+.split-view-container {
+  margin: 4rem 0;
+  padding: 2rem 0;
+  overflow: hidden;
+  width: 100%;
+  background-color: #f5f5f5;
+  position: relative;
+  min-height: 80vh;
+  /* Initially hidden, revealed by JS */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.split-view-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.split-view-container .container {
+  display: flex;
+  gap: 1rem;
+  height: 80vh;
+  width: 90%;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.split-view-container .box {
+  --overlay-opacity: 0.3;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 0.5s ease, opacity 0.5s ease, border-radius 0.5s ease;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.split-view-container .box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, var(--overlay-opacity));
+  transition: opacity 0.5s ease;
+  border-radius: inherit;
+}
+
+.split-view-container .box:hover::before {
+  opacity: 0;
+}
+
+.split-view-container .box-left {
+  background-image: url("https://picsum.photos/800/1200?random=17");
+}
+
+.split-view-container .box-right {
+  background-image: url("https://picsum.photos/800/1200?random=18");
+}
+
+.split-view-container .container:hover .box {
+  flex: 1;
+}
+
+.split-view-container .container .box:hover {
+  flex: 2;
+}
+
+.split-view-container .box .content {
+  text-align: center;
+  color: #ffffff;
+  padding: 2rem;
+  z-index: 1;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.split-view-container .box .content h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin: 0;
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+}
+
+.split-view-container .box .content p {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 2rem;
+  text-align: left;
+  padding: 2rem;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 80%;
+}
+
+.split-view-container .number {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effects */
+.split-view-container .container:hover .box:not(:hover) .content p {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.split-view-container .container .box:hover .content p {
+  opacity: 1;
+  transform: translateX(10px);
+}
+
+.split-view-container .container .box:hover .content h2 {
+  transform: translateY(-30px);
+}
+
+.split-view-container .container .box:hover .number {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.split-view-container .container:hover .box:not(:hover) .number {
+  opacity: 0.5;
+}
+
+.split-view-container .container .box.not-hovered {
+  opacity: 0.8;
+}
+
+/* Responsive styles for split view */
+@media(max-width: 768px) {
+  .split-view-container .container {
+    flex-direction: column;
+    height: auto;
+    min-height: 80vh;
+  }
+  
+  .split-view-container .box {
+    width: 100%;
+    height: 50vh;
+  }
+  
+  .split-view-container .box:hover {
+    height: 60vh;
+  }
+  
+  .split-view-container .box:hover ~ .box {
+    height: 40vh;
+  }
+}
+
+@media(max-width: 600px) {
+  .split-view-container .container {
+    padding: 1rem;
+  }
+  
+  .split-view-container .box .content h2 {
+    font-size: 2rem;
+  }
+  
+  .split-view-container .box .content p {
+    font-size: 0.9rem;
+    padding: 1.5rem;
+  }
+}
+
+@media(max-width: 480px) {
+  .split-view-container {
+    margin: 2rem 0;
+  }
+  
+  .split-view-container .box {
+    height: 40vh;
+  }
+  
+  .split-view-container .box:hover {
+    height: 50vh;
+  }
+  
+  .split-view-container .box:hover ~ .box {
+    height: 30vh;
+  }
+  
+  .split-view-container .box .content h2 {
+    font-size: 1.75rem;
+  }
+  
+  .split-view-container .box .content p {
+    font-size: 0.875rem;
+    padding: 1rem;
+  }
+  
+  .split-view-container .number {
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.3rem;
+  }
+}
