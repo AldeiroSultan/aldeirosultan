@@ -12,7 +12,7 @@
 &nbsp;&nbsp;&nbsp;📊 &nbsp;Background in **credit risk / banking** and a growing interest in **fintech, fraud/AML, and tech risk**.\
 &nbsp;&nbsp;&nbsp;📱 &nbsp;Building **Android apps** (Java/Kotlin, XML, Firebase), web tools, and GIS StoryMaps that tie real-world data to decisions.\
 &nbsp;&nbsp;&nbsp;🛡️ &nbsp;Long-term goal: bridge **business, engineering, and cybersecurity/tech risk** in financial or infrastructure-focused companies.\
-&nbsp;&nbsp;&nbsp;🌏 &nbsp;Indonesian living in Canada, trying to blend both worlds into the projects I work on.\
+&nbsp;&nbsp;&nbsp;🌏 &nbsp;Indonesian living in Canada.\
 &nbsp;&nbsp;&nbsp;🎾 &nbsp;Outside of dev: tennis, Pokémon, music, and experimenting with random side projects.
 
 <p align="center">
@@ -93,7 +93,7 @@
     Public Wi-Fi risks, ARP/MAC, basic networking concepts — slowly building a foundation toward **security / tech risk roles**.
 
   - 📊 **Data & Analytics**  
-    SQL for querying, Python/R for basic analysis, lots of **Excel** for financial modeling, reporting, and quick “does this make sense?” checks.
+    SQL for querying, Python/R for basic analysis, lots of **Excel** for financial modeling and reporting.
 
 </details>
 
