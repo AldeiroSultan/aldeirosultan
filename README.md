@@ -9,9 +9,9 @@
 
 &nbsp;&nbsp;&nbsp;💻 &nbsp;Third-year Computer Science student with a minor in Geospatial Information Science (GIS) at UBC Okanagan.\
 &nbsp;&nbsp;&nbsp;🏗️ &nbsp;Working in **construction tech (B2B SaaS)**, helping connect field operations with finance (Procore ⇄ QuickBooks/Xero, workflows, and data).\
-&nbsp;&nbsp;&nbsp;📊 &nbsp;Background in **credit risk / banking** and a growing interest in **fintech, fraud/AML, and tech risk**.\
-&nbsp;&nbsp;&nbsp;📱 &nbsp;Building **Android apps** (Java/Kotlin, XML, Firebase), web tools, and GIS StoryMaps that tie real-world data to decisions.\
-&nbsp;&nbsp;&nbsp;🛡️ &nbsp;Long-term goal: bridge **business, engineering, and cybersecurity/tech risk** in financial or infrastructure-focused companies.\
+&nbsp;&nbsp;&nbsp;📊 &nbsp;Background in **credit risk / banking** and a growing interest in **fintech, fraud/AML, and ERP**.\
+&nbsp;&nbsp;&nbsp;📱 &nbsp;Building **Android apps** (Java/Kotlin, XML, Firebase), web tools, and GIS StoryMaps.\
+&nbsp;&nbsp;&nbsp;🛡️ &nbsp;Long-term goal: Integration Specialist.\
 &nbsp;&nbsp;&nbsp;🌏 &nbsp;Indonesian living in Canada.\
 &nbsp;&nbsp;&nbsp;🎾 &nbsp;Outside of dev: tennis, Pokémon, music, and experimenting with random side projects.
 
@@ -86,14 +86,14 @@
   - 💸 **Fintech, Fraud & Tech Risk**  
     Curious about **AML, fraud detection, and cybersecurity** in financial services and payments, and how software can automate controls and monitoring.
 
-  - 🗺️ **GIS & Spatial Thinking**  
-    Using **ArcGIS / StoryMaps** to visualize patterns (environment, infrastructure, cities) and support real-world decisions with maps and spatial data.
-
-  - 🌐 **Networking & Security Basics**  
-    Public Wi-Fi risks, ARP/MAC, basic networking concepts — slowly building a foundation toward **security / tech risk roles**.
+  - 🗺️ **GIS & Spatial Data**  
+    Using **ArcGIS / StoryMaps** to visualize patterns (environment, infrastructure, cities) and spatial data.
 
   - 📊 **Data & Analytics**  
     SQL for querying, Python/R for basic analysis, lots of **Excel** for financial modeling and reporting.
+    
+  - 📊 **ERP Systems**  
+    Curious about how to integrate ERP on all sorts of businesses.
 
 </details>
 
