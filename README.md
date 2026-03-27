@@ -9,7 +9,7 @@
 
 &nbsp;&nbsp;&nbsp;💻 &nbsp;Third-year Computer Science student with a minor in Geospatial Information Science (GIS) at UBC Okanagan.\
 &nbsp;&nbsp;&nbsp;🏗️ &nbsp;Working in **construction tech (B2B SaaS)**, helping connect field operations with finance (Procore ⇄ QuickBooks/Xero, workflows, and data).\
-&nbsp;&nbsp;&nbsp;📊 &nbsp;Background in **credit risk / banking** and a growing interest in **fintech, fraud/AML, and ERP**.\
+&nbsp;&nbsp;&nbsp;📊 &nbsp;Background in **credit risk / banking** and a growing interest in **fintech, fraud/AML, and ERP integration**.\
 &nbsp;&nbsp;&nbsp;📱 &nbsp;Building **Android apps** (Java/Kotlin, XML, Firebase), web tools, and GIS StoryMaps.\
 &nbsp;&nbsp;&nbsp;🛡️ &nbsp;Long-term goal: Integration Specialist.\
 &nbsp;&nbsp;&nbsp;🌏 &nbsp;Indonesian living in Canada.\
